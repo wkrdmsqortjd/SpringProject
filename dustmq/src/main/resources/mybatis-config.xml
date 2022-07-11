@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration> 
+	<settings>
+    	<setting name="cacheEnabled" value="false" /> 
+        <setting name="jdbcTypeForNull" value="NULL" /> 
+    </settings> 
+    
+    <!-- 오라클에서 Long타입 가져오기 위한 핸들러 -->
+	<typeHandlers>
+        <typeHandler handler="com.dustmq.handler.CLOBHandler" javaType="String" jdbcType="LONGVARCHAR"/>
+    </typeHandlers>
+</configuration>

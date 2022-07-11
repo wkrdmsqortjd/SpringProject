@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.dustmq.mapper.BookMapper">
+
+	<!-- criteria(검색 조건) -->
+	<sql id="criteria">
+			<!-- <if test="keyword != null">
+				bookName like '%' || #{keyword} || '%' and			
+			</if> -->
+			
+			<!-- authorId 앞에 AND를 없앨 수 있게 prefixOverrides 속성 사용 -->
+			<trim prefix="(" suffix=") AND" prefixOverrides="AND">
+				
+				<!-- typeArr에 담긴 요소수 만큼 반복되어 작성 -->
+				<foreach collection="typeArr" item="type">	<!-- collection : 전달받은 인자. 배열 형태만 가능 , item : 인자값의 alias 명 -->			
+				
+				<!-- 조건문끼리는 AND로 이어지게 추가 -->
+				<trim prefix="AND">
+					<choose>	
+						
+						<when test="type == 'A'.toString()">			<!-- 'A'는 작가 검색 -->
+							<trim prefixOverrides="or">
+								<foreach item="authorId" collection="authorArr">	<!-- authorId는 배열의 형태로 전달 받기 때문에 foreach 사용 -->
+									<trim prefix="or">
+										authorId = #{authorId}
+									</trim>
+								</foreach>
+							</trim>
+						</when>						
+						
+						<when test="type == 'C'.toString()">			<!-- 'C'는 카테고리 검색 -->
+							cateCode like '%' || #{cateCode} || '%'
+						</when>
+						
+						<when test="type == 'T'.toString()">			<!-- 'T'는 책 제목 검색 -->
+							bookName like '%' || #{keyword} || '%'
+						</when>
+					
+					</choose>
+				</trim>
+				
+				</foreach>
+			
+			</trim>
+			
+	</sql>
+	
+	<!-- 상품 검색 -->
+	<select id="getGoodsList" resultType="com.dustmq.model.BookVO">
+	
+		<![CDATA[
+			select * from(
+				select /*+INDEX_DECS(vam_book SYS_C008313)*/ rownum as rn, bookId, bookName,
+					(select authorName from vam_author where vam_book.authorId = vam_author.authorId) authorName, authorId,
+		            (select cateName from vam_bcate where vam_book.cateCode = vam_bcate.cateCode) cateName,cateCode, publisher, publeYear, bookPrice, bookDiscount 
+				from vam_book
+				where
+		]]>
+		
+		<include refid="criteria"></include>
+		
+		   <![CDATA[
+	    		        
+		        rownum <= #{pageNum} * #{amount} 
+	        	)
+	        where rn > (#{pageNum} -1) * #{amount}
+		]]>	  		
+	
+	</select>
+	
+	<!-- 상품 총 개수 -->
+	<select id="goodsGetTotal" resultType="int">
+
+		select count(*) from vam_book
+		where 
+		<include refid="criteria"></include>
+		bookId > 0
+	
+	</select>
+	
+	<!-- 작가 id 리스트 요청 -->
+	<select id="getAuthorIdList" resultType="String">
+	
+		select authorid from vam_author where authorname like '%' || #{keyword} || '%'
+	
+	</select>
+	
+	<!-- 국내 카테고리 리스트 -->
+	<select id="getCateCode1" resultType="com.dustmq.model.CateVO">
+	
+		<![CDATA[
+				select * from vam_bcate where cateCode > 100000 and cateCode < 200000
+		]]>
+
+	</select>
+	
+	<!-- 국외 카테고리 리스트 -->
+  	<select id="getCateCode2" resultType="com.dustmq.model.CateVO">
+	
+		<![CDATA[
+				select * from vam_bcate where cateCode > 200000 and cateCode < 300000
+		]]>
+	
+	</select>
+  
+  
+  </mapper>

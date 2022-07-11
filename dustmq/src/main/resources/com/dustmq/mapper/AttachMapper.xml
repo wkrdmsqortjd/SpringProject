@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+  <mapper namespace="com.dustmq.mapper.AttachMapper">
+	
+	<!-- 이미지 정보 반환 -->
+	<select id="getAttachList" resultType="com.dustmq.model.AttachImageVO">
+	
+		select * from vam_image where bookId = #{bookId}
+	
+	</select>
+	
+	
+	
+  </mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- DB정보를 가지는 dataSource 빈 객체 생성, data의 연결정보가 들어있다. -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" lazy-init="false">
+ 		<!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"></property>  -->
+ 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>	
+         <!-- Oracle 11g 경우 value="jdbc:oracle:thin:@URL주소:1521:XE" -->
+         <!-- Oracle 19  경우 value="jdbc:oracle:thin:@URL주소:1521:orcl" -->
+		<property name="username" value="kh1stteam"></property>
+		<property name="password" value="1234"></property>
+	</bean>	
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:/mybatis-config.xml"></property> <!-- MyBatis의 타입을 지정하는 xml -->
+	</bean>	
+	
+	<!-- Transaction 빈 등록  -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- 트렌스액션을 어노테이션 기반으로 사용하기 위해 추가 -->
+	<tx:annotation-driven />
+	
+	<!-- 배치 프로그램을 어노테이션으로 사용하기 위해 추가 -->
+	<task:annotation-driven/>
+	
+	 <!-- naver mail설정 -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
+     <property name="host" value="smtp.naver.com"/> <!-- 메이서버 호스트 -->
+     <property name="port" value="587"/> <!-- 메이서버 포트번호 -->
+     <property name="username" value="fjrzlrta@naver.com"/> <!-- 자신의 이메일 아이디 -->
+     <property name="password" value="24748542Rtg!"/> <!-- 자신의 비밀번호 -->
+       <!-- 보안연결 SSL과 관련된 설정 -->
+     <property name="javaMailProperties">
+      <props>
+      <prop key="mail.smtp.auth">true</prop>
+      <prop key="mail.smtp.starttls.enable">true</prop>
+      <prop key="mail.smtps.checkserveridentity">true</prop>
+      <prop key="mail.smtps.ssl.trust">*</prop>
+      <prop key="mail.debug">true</prop>
+      <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+      <prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+      </props>
+     </property>
+    </bean>
+
+	<!-- MyBatis 관련 어노테이션을 찾아서 처리 db, sql 관련 -->
+	<mybatis-spring:scan base-package="com.dustmq.mapper"/>
+
+	<!-- 스프링에서 인식해야할 객체가 담긴 패키지 -->
+	<context:component-scan base-package="com.dustmq.sample"></context:component-scan>	
+	<context:component-scan base-package="com.dustmq.mapper"></context:component-scan>	 
+	<context:component-scan base-package="com.dustmq.service"></context:component-scan>	
+	<context:component-scan base-package="com.dustmq.model"></context:component-scan>	 
+	<context:component-scan base-package="com.dustmq.task"></context:component-scan>	
+	<!-- <context:component-scan base-package="com.dustmq.controller"></context:component-scan> -->	 
+	
+	<!-- 스프링 프로젝트에 MyBatis 연결 -->
+	<!-- <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+      <property name="dataSource" ref="dataSource" />
+      <property name="mapperLocations" value="classpath:/mapper/*.xml" />
+    </bean>
+
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">	
+      <constructor-arg index="0" ref="sqlSession"/>
+	</bean> 
+
+	<bean id="datasource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+	 </bean>  -->
+
+</beans>
