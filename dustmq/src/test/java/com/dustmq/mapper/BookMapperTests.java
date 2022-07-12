@@ -162,4 +162,55 @@ public class BookMapperTests {
 		
 	}
 	
+	/* 카테고리 리스트 (X)*/
+	@Test
+	public void getCateListTest1() {
+		
+		Criteria cri = new Criteria();
+		
+		String type = "TC";
+		String keyword = "김승현";
+		// String type = "A";
+		// String keyword = "아르마딜로";
+		
+		cri.setType(type);
+		cri.setKeyword(keyword);
+		// cri.setAuthorArr(bookMapper.getAuthorIdList(keyword));
+		
+		String[] cateList = bookMapper.getCateList(cri);
+		
+		for(String codeNum : cateList) {
+				System.out.println("codeNum :::::::" + codeNum);
+		}
+	}
+	
+	/* 카테고리 정보 얻기 (X)*/	
+	@Test
+	public void getCateInfoTest1() {
+		
+		Criteria cri = new Criteria();
+		
+		String type = "TC";
+		String keyword = "test";	
+		String cateCode="101001";
+
+		cri.setType(type);
+		cri.setKeyword(keyword);
+		cri.setCateCode(cateCode);
+		
+		bookMapper.getCateInfo(cri);
+		
+	}
+	
+	/* 상품 정보 */
+	@Test
+	public void getGoodsInfo() {
+		int bookId = 280;
+		BookVO goodsInfo = bookMapper.getGoodsInfo(bookId);
+		
+		System.out.println("===========================");
+		System.out.println(goodsInfo);
+		System.out.println("===========================");
+	}
+	
 }

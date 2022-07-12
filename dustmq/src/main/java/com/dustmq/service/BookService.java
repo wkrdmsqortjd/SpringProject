@@ -19,4 +19,7 @@ public interface BookService {
 	
 	/* 국외 카테고리 리스트 */
 	public List<CateVO> getCateCode2();
+	
+	/* 상품 정보 */
+	public BookVO getGoodsInfo(int bookId);
 }

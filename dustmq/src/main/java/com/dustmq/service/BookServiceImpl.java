@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dustmq.mapper.AdminMapper;
 import com.dustmq.mapper.AttachMapper;
 import com.dustmq.mapper.BookMapper;
 import com.dustmq.model.AttachImageVO;
@@ -24,6 +25,9 @@ public class BookServiceImpl implements BookService {
 	
 	@Autowired
 	private AttachMapper attachMapper;
+	
+	@Autowired
+	private AdminMapper adminMapper;
 	
 	/* 상품 검색 */
 	@Override
@@ -91,6 +95,19 @@ public class BookServiceImpl implements BookService {
 		log.info("getCateCode2().........");
 		
 		return bookMapper.getCateCode2();
+	}
+
+	/* 상품 정보 */
+	@Override
+	public BookVO getGoodsInfo(int bookId) {
+
+		BookVO goodsInfo = bookMapper.getGoodsInfo(bookId);
+		
+		// 받아온 상품 정보 데이터에 이미지 정보를 저장
+		goodsInfo.setImageList(adminMapper.getAttachInfo(bookId));
+		
+		// 정보(상품 정보 + 이미지)가 담긴 BookVO 객체의 변수인 goodsInfo 리턴
+		return goodsInfo;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.dustmq.mapper;
 import java.util.List;
 
 import com.dustmq.model.BookVO;
+import com.dustmq.model.CateFilterVO;
 import com.dustmq.model.CateVO;
 import com.dustmq.model.Criteria;
 
@@ -22,4 +23,13 @@ public interface BookMapper {
 	
 	/* 국외 카테고리 리스트 */
 	public List<CateVO> getCateCode2();
+	
+	/* 상품 정보 */
+	public BookVO getGoodsInfo(int bookId);
+	
+	/* 검색 대상 카테고리 리스트 (x)*/
+	public String[] getCateList(Criteria cri);
+	
+	/* 카테고리 정보( 카테고리 이름, 코드 번호 + 검색대상 수 ) (x) */
+	public CateFilterVO getCateInfo(Criteria cri);
 }

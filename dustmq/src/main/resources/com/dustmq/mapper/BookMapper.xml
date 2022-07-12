@@ -106,5 +106,69 @@
 	
 	</select>
   
+  	<!-- 검색 대상 카테고리 리스트 (X)-->
+  	<select id="getCateList" resultType="String">
+  	
+  		<!-- DISTINCT는 select 조회시 중복 컬럼을 제거해준다. -->
+  		select DISTINCT cateCode from vam_book where
+  		<foreach item="type" collection="typeArr">
+				<choose>
+					<when test="type == 'A'.toString()">	<!-- 작가 검색 -->
+						<trim prefixOverrides="or">
+							<foreach collection="authorArr" item="authorId">
+								<trim prefix="or">
+										authorId = #{authorId}
+										<!-- select distinct cateCode from vam_book where authorId = #{authorId} OR orauthorId = #{authorId} ... -->
+								</trim>
+							</foreach>
+						</trim>
+					</when>
+					<when test="type == 'T'.toString()">	<!-- 책 제목 검색 -->
+							bookName like '%' || #{keyword} || '%'
+					</when>
+				</choose>
+  		</foreach>  	
+  	</select>
+  	
+  	<!-- 카테고리 정보(이름, 번호 + 검색 대상 수 (X) -->
+  	<select id="getCateInfo" resultType="com.dustmq.model.CateFilterVO">
+	
+		select DISTINCT count(*) cateCount, a.cateCode, b.cateName from vam_book a left join vam_bcate b on a.cateCode = b.cateCode 
+		where 
+
+		<foreach item="type" collection="typeArr">		
+  				<choose>
+  					<when test="type == 'A'.toString()">
+  						<trim prefix="(" suffix=")" prefixOverrides="or">
+		  					<foreach collection="authorArr" item="authorId">
+		  						<trim prefix="or">
+		  							authorId = #{authorId}
+		  						</trim>
+		  					</foreach>
+  						</trim>
+  						and a.cateCode = #{cateCode}
+  					</when>
+  					<when test="type == 'T'.toString()">
+  						bookName like '%' || #{keyword} || '%' and a.cateCode = #{cateCode}
+  					</when>
+  					  					
+  				</choose>
+  		</foreach>
+  		
+  		group by a.cateCode, b.cateName
+	
+	</select>
+	
+	<!-- 상품 정보 -->
+	<select id="getGoodsInfo" resultType="com.dustmq.model.BookVO">
+	
+		<!-- cateName은 vam_author 와 vam_bcate에 있어 JOIN문 사용 -->
+		select a.BOOKID, a.BOOKNAME, a.AUTHORID, b.AUTHORNAME, a.PUBLEYEAR, a.PUBLISHER, a.CATECODE, c.CATENAME, a.BOOKPRICE, a.BOOKSTOCK, a.BOOKDISCOUNT, a.BOOKINTRO, a.BOOKCONTENTS
+		from vam_book a 
+		left outer join vam_author b on a.authorId = b.authorId
+		left outer join vam_bcate c on a.catecode = c.catecode
+		where bookId = #{bookId}
+	
+	</select>
   
   </mapper>
