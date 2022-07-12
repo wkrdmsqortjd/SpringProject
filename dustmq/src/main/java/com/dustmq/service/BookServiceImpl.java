@@ -100,7 +100,8 @@ public class BookServiceImpl implements BookService {
 	/* 상품 정보 */
 	@Override
 	public BookVO getGoodsInfo(int bookId) {
-
+		
+		// 상품의 정보를 goodsInfo에 저장
 		BookVO goodsInfo = bookMapper.getGoodsInfo(bookId);
 		
 		// 받아온 상품 정보 데이터에 이미지 정보를 저장

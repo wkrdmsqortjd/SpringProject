@@ -125,11 +125,12 @@ public class BookController {
 	}
 	
 	/* 상품 상세 */
-	@GetMapping("/goodsDetail/{bookId}")
+	@GetMapping("/goodsDetail/{bookId}") // 사용자가 전송한 식별자 값을 변수로 인식하도록 템플릿 변수 {bookId} 작성
 	public String goodsDetailGET(@PathVariable("bookId")int bookId, Model model) {
 		
 		logger.info("goodsDetailGET().............");
 		
+		// 받아온 상품의 정보를 Model을 이용해 goodsDetail.jsp(view)로 반환
 		model.addAttribute("goodsInfo", bookService.getGoodsInfo(bookId));
 		
 		return "/goodsDetail";

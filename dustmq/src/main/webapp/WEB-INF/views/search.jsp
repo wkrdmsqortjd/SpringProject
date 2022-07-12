@@ -27,7 +27,7 @@
 						<a href="/member/join">회원가입</a>
 					</li>
 				</c:if>
-				<c:if test="${member != null }">	<!-- 로그인 o -->		
+				<c:if test="${member != null }">			<!-- 로그인 o -->		
 					<c:if test="${member.adminCk == 1 }">	<!-- 관리자 계정 -->
 						<li><a href="/admin/main">관리자 페이지</a></li>
 					</c:if>							
@@ -115,7 +115,9 @@
 													[${list.cateName}]
 												</div>
 												<div class="title">
-													${list.bookName}
+													<a href="/goodsDetail/${list.bookId}">	<!-- @PathVariable -->
+														${list.bookName}
+													</a>
 												</div>
 												<div class="author">
 												<!-- String 타입의 publeYear을 Date타입으로 바꾸기 위해 parseDate 사용 -->
