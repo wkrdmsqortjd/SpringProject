@@ -1,5 +1,7 @@
 package com.dustmq.model;
 
+import java.util.List;
+
 /* 장바구니 DTO */
 public class CartVO {
 
@@ -23,6 +25,38 @@ public class CartVO {
 	private int salePrice;	// 판매가 (할인 적용가)
 	
 	private int totalPrice;	// 총 가격
+	
+	// 포인트
+	private int point;
+	private int totalPoint;
+	
+	// 상품 이미지
+	private List<AttachImageVO> imageList;
+	
+	// salePrice 와 totalPrice 초기화 메서드
+	public void initSaleTotal() {
+		this.salePrice = (int)(this.bookPrice * (1 - this.bookDiscount));
+		this.totalPrice = this.salePrice * this.bookCount;
+		this.point = (int)(Math.floor(this.salePrice * 0.05));
+		this.totalPoint = this.point * this.bookCount;
+}
+	
+	
+	public List<AttachImageVO> getImageList() {
+		return imageList;
+	}
+
+	public void setImageList(List<AttachImageVO> imageList) {
+		this.imageList = imageList;
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public int getTotalPoint() {
+		return totalPoint;
+	}
 
 	public int getCartId() {
 		return cartId;
@@ -88,17 +122,11 @@ public class CartVO {
 		return totalPrice;
 	}
 
-	// salePrice 와 totalPrice 초기화 메서드
-	public void initSaleTotal() {
-		this.salePrice = (int)(this.bookPrice * (1 - this.bookDiscount));
-		this.totalPrice = this.salePrice * this.bookCount;
-	}
-	
 	@Override
 	public String toString() {
 		return "CartVO [cartId=" + cartId + ", memberId=" + memberId + ", bookId=" + bookId + ", bookCount=" + bookCount
 				+ ", bookName=" + bookName + ", bookPrice=" + bookPrice + ", bookDiscount=" + bookDiscount
-				+ ", salePrice=" + salePrice + ", totalPrice=" + totalPrice + "]";
+				+ ", salePrice=" + salePrice + ", totalPrice=" + totalPrice + ", point=" + point + ", totalPoint="
+				+ totalPoint + ", imageList=" + imageList + "]";
 	}
-	
 }

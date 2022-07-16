@@ -1,6 +1,5 @@
-com.dustmq.model : VO(Value Object) ��Ű��, ������ Ÿ���� ����
-com.dustmq.mapper : DAO(Data Access Object) ������ �ϴ� ��Ű��. DB�� �����ϴ� ����
-com.dustmq.service : Service ��Ű��. mapper �� Controller ���̸� ����
+https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%97%85%EB%A1%9C%EB%93%9C
+간단한 git 사용법
 
 	작성 순서 
 
@@ -1239,9 +1238,48 @@ com.dustmq.service : Service ��Ű��. mapper �� Controller ����
 	
 	8. CartMapper 수정 : addCart()를 실패했을 때 0이 반환되도록 목표 (예외처리 사용)
 	
+	9. 장바구니 추가 , 뷰 구현
+	
+	9-1. 개요 : goodsDetail.jsp 에서 memberId, bookId, bookCount 의 데이터 값들을 세팅하고, 
+			   "/cart/add" URL로 '장바구니 추가'를 요청하며 세팅한 값을 서버로 전송한 뒤 서버가 반환해 주는 값에 따라
+			   경고창을 띄운다. 그리고 수량 버튼을 "+" , "-" 버튼 동작 하도록 구현 후 위 데이터들을 Ajax 호출할 때 같이 전송되도록 구현
+	
+	9-2. 수량 버튼
+	9-3. '장바구니 추가'버튼
+	9-4. 테스트
+	
+	10. cart.jsp 구현
+	
+	10-1. 상단에 로그인 옆에 마이룸 , 장바구니 , 고객센터 등이 나오도록 구현
+		  첫 번째 사용자의 장바구니 정보 출력
+		  두 번째 사용자의 장바구니 정보를 종합한 정보를 출력
+		  세 번째 사용자가 취소를 선택할 수 있도록 checkbox를 이용, 그 에따라 종합정보가 변경
+		  네 번째 장바구니에 상품 이미지 출력
+		  
+    11. cart.jsp에서 상품 칸'체크 박스'의 체크 여부에 따라 '종합 정보 섹션'의 데이터들이 변경 되도록 구현하는 것이 목표
+		체크한 상품만 주문할 수 있도록 데이터가 넘겨지고, 장바구니 상품 페이지에서 종합정보(총 가격, 수량)이 체크가 변경될 때마다 실시간으로 변경을 구현
+		
+		체크 박스의 변화에 따라 종합정보 섹션의 데이터가 업데이트. 변화가 있을 때마다 페이지의 렌더링될 때 실행되도록 체크 유무 조건에 따라서 종합될 정보가 변화도록 구현
+		
+	12. 개별 체크 박스(태그 추가) : js에 if문을 주어 is()메서드 사용해서 변화가 있을 경우에 정보 변경이 적용되게 구현
+	
+	13. 체크박스 전체 선택
+	
+	.attr()을 통해서는 element가 가지는 속성값이나 정보를 조희(style, src, rowspan등) 하거나 세팅 , html 속성(attribute)를 다룬다. 		/ attr은 HTML 속성 값이 모두 String 타입
+	.prop()을 통해서는 element가 가지느 실제적인 상태(활성화, 체크, 선택여부 등)을 제어하는 업무 , javascript 프로퍼티(property)를 다룬다.	/ prop은 boolean, date, function 등으로 가져오기 가능
+	각 사용하는 목적에 따라 다를 수 있지만 prop()가 attr()보다 약 2.5배 빠르다는 장점이 있다.
+	HTML의 속성을 가지고 오고 싶을 때는 attr()을, javaScript로 수정된 요소의 값을 가지고 싶을 때 prop()을 사용하는걸 선호
+	보통 체크박스를 컨트롤할 때, 체크 여부도 알아 볼 수 있다.
+	
+	https://yeonzzy.tistory.com/21 참고
     
+    14. 이미지 출력 
     
-    
+	이미지를 출력하려면 이미지 정보(파일 이름, 파일 경로, uuid)가 필요. 장바구니 페이지로 이동하는 Controller의 URL 매핑 메서드가 '장바구니 view'로 상품의 이미지 정보를 전달
+	
+	전달하기 위해서 이미지 정보를 가지는 객체를 따로 생성해주지 않고 기존 장바구니 정보를 넘기는 CartVO에 이미지 정보를 함께 담도록 할 것. 
+	
+	이미지 정보를 담는 작업은 비지니스 로직을 구성하는 Service 단계에서 실행. 이미지 정보를 호출하는 AttachMapper 클래스의 getAttachList() 메서드를 활용    
     
     
     

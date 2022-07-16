@@ -20,9 +20,11 @@ public class CartServiceTests {
 		public void addCartTest() {
 				
 				//given
-				String memberId = "admin";
-				int bookId = 147;
-				int count = 5;
+				String memberId = "wkrdmsqortjd";
+				int bookId = 234;
+//				String memberId = "gfdsjklgjlfds";	// 에러 발생 (0)
+//				int bookId = 500;
+				int count = 2;
 				
 				CartVO cvo = new CartVO(); 
 				cvo.setMemberId(memberId);
@@ -34,7 +36,5 @@ public class CartServiceTests {
 			
 				//then
 				System.out.println("** result : " + result);
-			
-			
 		}
 }

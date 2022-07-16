@@ -38,7 +38,7 @@
 						마이룸
 					</li>
 					<li>
-						장바구니
+						<a href="/cart/${member.memberId}">장바구니</a>
 					</li>
 				</c:if>				
 				<li>
@@ -128,16 +128,19 @@
 							판매가 : <span class="discount_price_number"><fmt:formatNumber value="${goodsInfo.bookPrice - (goodsInfo.bookPrice*goodsInfo.bookDiscount)}" pattern="#,### 원" /></span> 
 							[<fmt:formatNumber value="${goodsInfo.bookDiscount*100}" pattern="###" />% 
 							<fmt:formatNumber value="${goodsInfo.bookPrice*goodsInfo.bookDiscount}" pattern="#,### 원" /> 할인]</div>							
-					</div>			
+					</div>		
+					<div>
+						적립 포인트 : <span class="point_span"></span>원
+					</div>	
 					<div class="line">
 					</div>	
 					<div class="button">						
 						<div class="button_quantity">
 							주문수량
-							<input type="text" value="1">
+							<input type="text" value="1" class="quantity_input">
 							<span>
-								<button>+</button>
-								<button>-</button>
+								<button class="plus_btn">+</button>
+								<button class="minus_btn">-</button>
 							</span>
 						</div>
 						<div class="button_set">
@@ -203,7 +206,63 @@ $(document).ready(function(){
 	
 	$(".publeyear").html(publeYear); /* 선택자에 있는 publeYear의 내용을 가져옴 */
 	
+	/* 포인트 */
+	let salePrice = "${goodsInfo.bookPrice - (goodsInfo.bookPrice * goodsInfo.bookDiscount)}";	// 할인 가
+	let point = salePrice * 0.05;	// 포인트
+	point = Math.floor(point);		// 반올림(소수점 나머지를 제거)
+	$(".point_span").text(point);	// text를 읽음
+	
 });	// $(document).ready(function())
+
+	/* 수량 버튼 조작 */
+	let quantity = $(".quantity_input").val();
+	
+    /* + 버튼을 누르면 */
+	$(".plus_btn").on("click", function(){
+			$(".quantity_input").val(++quantity);
+	});
+	
+	/* - 버튼을 누르면 */
+	$(".minus_btn").on("click", function(){
+		if(quantity > 1){							 /* 수량이 0 이하가 되는것을 방지 */
+			$(".quantity_input").val(--quantity);	
+		}
+	});
+	
+	/* 서버로 전송할 데이터 */
+	const form = {
+			
+			memberId : '${member.memberId}',
+			bookId : '${goodsInfo.bookId}',
+			bookCount : ''
+	}
+	
+	/* 장바구니 추가 버튼 */
+	$(".btn_cart").on("click", function(e){
+		
+		form.bookCount = $(".quantity_input").val();	// 추가 버튼을 누르면 수량의 값이 bookCount에 할당
+		$.ajax({
+				url: '/cart/add',			// 호출할 url
+				type: 'POST',				// 호출할 방법
+				data: form,					// 서버로 보낼 데이터
+				success: function(result){	// 서버가 요청을 성공적으로 수행했을 때 수행될 메서드, 파라미터는 서버가 반환한 값
+						console.log(result);
+						cartAlert(result);
+					}	
+		})	// $.ajax()
+	});
+	
+	function cartAlert(result){
+		if(result == '0'){
+			alert("장바구니에 추가를 하지 못하였습니다.");
+		} else if(result == '1'){
+			alert("장바구니에 추가되었습니다.");
+		} else if(result == '2'){
+			alert("장바구니에 이미 추가되었습니다.");
+		} else if(result == '5'){
+			alert("로그인 후 이용가능합니다.");
+		}	
+	}
 
 </script>
 

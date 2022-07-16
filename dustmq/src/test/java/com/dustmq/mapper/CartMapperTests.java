@@ -23,8 +23,8 @@ public class CartMapperTests {
 			
 		String memberId = "wkrdmsqortjd";
 		int bookId = 282;
-		int bookId2 = 283;
-		int bookId3 = 284;
+//		int bookId2 = 283;
+//		int bookId3 = 284;
 		int count = 2;
 		
 		CartVO cart = new CartVO();
