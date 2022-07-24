@@ -11,6 +11,7 @@ import com.dustmq.model.AttachImageVO;
 import com.dustmq.model.BookVO;
 import com.dustmq.model.CateVO;
 import com.dustmq.model.Criteria;
+import com.dustmq.model.OrderVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -122,8 +123,20 @@ public class AdminServiceImpl implements AdminService {
 		log.info("getAttachInfo........");	
 		
 		return adminMapper.getAttachInfo(bookId);
+	}
+
+	/* 주문한 상품의 리스트 */
+	@Override
+	public List<OrderVO> getOrderList(Criteria cri) {
+		
+		return adminMapper.getOrderList(cri);
+	}
+
+	/* 주문 총 개수 */
+	@Override
+	public int getOrderTotal(Criteria cri) {
+		
+		return adminMapper.getOrderTotal(cri);
 	}	
-	
-	
 
 }

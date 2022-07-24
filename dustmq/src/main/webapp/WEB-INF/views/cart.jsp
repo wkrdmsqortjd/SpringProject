@@ -49,7 +49,7 @@
 		<div class="top_area">
 			<!-- 로고영역 -->
 			<div class="logo_area">
-				<a href="/main"><img src="/resources/img/guhaebang.png"></a>
+				<a href="/main"><img src="/resources/img/guhaebang_logo.png"></a>
 			</div>
 			<div class="search_area">
                 	<div class="search_wrap">
@@ -117,7 +117,7 @@
 				<table class="cart_table">
 					<caption>표 내용 부분</caption>
 					<tbody>
-						<c:forEach items="${cartInfo}" var="ci">
+						<c:forEach items="${cartInfo}" var="ci">	<!-- Controller에서 Model을 통해 전달 받은 객체 -->
 							<tr>
 								<td class="td_width_1 cart_info_td">
 									<input type="checkbox" class="individual_cart_checkbox input_size_20" checked="checked">
@@ -127,6 +127,7 @@
 									<input type="hidden" class="individual_totalPrice_input" value="${ci.salePrice * ci.bookCount}">
 									<input type="hidden" class="individual_point_input" value="${ci.point}">
 									<input type="hidden" class="individual_totalPoint_input" value="${ci.totalPoint}">
+									<input type="hidden" class="individual_bookId_input" value="${ci.bookId}">
 								</td>
 								<td class="td_width_2">
 									<div class="image_wrap" data-bookid="${ci.imageList[0].bookId}" data-path="${ci.imageList[0].uploadPath}" data-uuid="${ci.imageList[0].uuid}" data-filename="${ci.imageList[0].fileName}">
@@ -145,12 +146,14 @@
 										<button class="quantity_btn plus_btn">+</button>
 										<button class="quantity_btn minus_btn">-</button>
 									</div>
-									<a class="quantity_modify_btn">변경</a>
+									<a class="quantity_modify_btn" data-cartid="${ci.cartId}">변경</a>
 								</td>
 								<td class="td_width_4 table_text_align_center">
 									<fmt:formatNumber value="${ci.salePrice * ci.bookCount}" pattern="#,### 원" />
 								</td>
-								<td class="td_width_4 table_text_align_center delete_btn"><button>삭제</button></td>
+								<td class="td_width_4 table_text_align_center>">
+									<button class="delete_btn" data-cartid="${ci.cartId}">삭제</button>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -231,10 +234,27 @@
 			</div>
 			<!-- 구매 버튼 영역 -->
 			<div class="content_btn_section">
-				<a>주문하기</a>
+				<a class="order_btn">주문하기</a>
 			</div>
-			
 		</div>
+		
+		<!-- 변경된 데이터 정보를 update 매핑 메서드에 전달 -->
+		<form action="/cart/update" method="post" class="quantity_update_form">
+			<input type="hidden" name="cartId" class="update_cartId">		
+			<input type="hidden" name="bookCount" class="update_bookCount">		
+			<input type="hidden" name="memberId" value="${member.memberId}">		
+		</form>
+		
+		<!-- 삭제한 정보를 delete 매핑 메서드에 전달 -->
+		<form action="/cart/delete" method="post" class="quantity_delete_form">
+				<input type="hidden" name="cartId" class="delete_cartId">
+				<input type="hidden" name="memberId" value="${member.memberId}">
+		</form>
+		
+		<!-- 주문 form -->
+		<form action="/order/${member.memberId}" method="get" class="order_form">
+
+		</form>
 		
 		 <%@include file="./includes/admin/footer.jsp" %>	<!-- footer --> 
 		
@@ -347,7 +367,80 @@ $(document).ready(function(){
 
 	}
 	
-
+	/* 수량 변경 버튼 동작 구현 ( + , - 버튼 ) */
+	$(".plus_btn").on("click", function(){
+		
+		let quantity = $(this).parent("div").find("input").val();	// ${ci.bookCount}
+		$(this).parent("div").find("input").val(++quantity);		// 수량이 1 씩 증가
+		
+	});
+	
+	$(".minus_btn").on("click", function(){
+		
+		let quantity = $(this).parent("div").find("input").val();	
+		
+		if(quantity > 1){	// 수량이 1 보다 클 때 동작
+			$(this).parent("div").find("input").val(--quantity);
+		}
+	});
+	
+	/* 수량 수정 버튼 */
+	$(".quantity_modify_btn").on("click", function(){	/* 변경 버튼을 누르면 */
+		
+		let cartId = $(this).data("cartid");
+		let bookCount = $(this).parent("td").find("input").val();
+		
+		/* modifyCart를 실행하기 위해 cartId 와 bookCount의 데이터가 필요 */
+		$(".update_cartId").val(cartId);
+		$(".update_bookCount").val(bookCount);
+		$(".quantity_update_form").submit();
+	});
+	
+	/* 삭제 버튼 */
+	$(".delete_btn").on("click", function(e){
+		
+		/* 고유 동작을 중단 ex) a 태그 , submit 태그를 통해 페이지를 이동한다거나 form안에 있는 input 등을 전송 할 때 */
+		e.preventDefault();	
+		
+		const cartId = $(this).data("cartid");
+		
+		$(".delete_cartId").val(cartId);		// cartId의 값을 form 태그에 있는 cartId에 저장
+		$(".quantity_delete_form").submit();	// /cart/delete 매핑 메서드에 전송
+	
+		console.log("삭제 실행");
+	});
+	
+	/* 주문 페이지 이동 */
+	$(".order_btn").on("click", function(){
+		
+		let form_contents = '';		/* input태그 문자열 값이 저장될 변수 */
+		let orderNumber = 0;		/* 배열의 index 역할 */
+		
+		/* 상품 데이터가 저장된 input태그들을 반복 접근하도록 메서드 작성 */
+		$(".cart_info_td").each(function(index, element){
+			
+			/* 사용자가 체크한 물품에 대해서만 조건을 내야함 */
+			if($(element).find(".individual_cart_checkbox").is(":checked") === true){	//체크여부
+			
+				let bookId = $(element).find(".individual_bookId_input").val();
+				let bookCount = $(element).find(".individual_bookCount_input").val();
+				
+				let bookId_input = "<input name='orders[" + orderNumber + "].bookId' type='hidden' value='" + bookId + "'>";
+				form_contents += bookId_input;
+				
+				let bookCount_input = "<input name='orders[" + orderNumber + "].bookCount' type='hidden' value='" + bookCount + "'>";
+				form_contents += bookCount_input;
+			
+				orderNumber += 1;	// 다음 객체에 접근할 때 +1됨
+			
+			}
+		});
+		
+		$(".order_form").html(form_contents);
+		$(".order_form").submit();
+		console.log("주문 실행");
+	});
+	
 
 </script>
 

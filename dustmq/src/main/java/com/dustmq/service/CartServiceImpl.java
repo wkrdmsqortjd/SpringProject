@@ -60,4 +60,18 @@ public class CartServiceImpl implements CartService{
 		}
 		return cart;
 	}
+
+	/* 카트 수량 변경 */
+	@Override
+	public int modifyCount(CartVO cart) {
+
+		return cartMapper.modifyCart(cart);
+	}
+	
+	/* 카트 품목 삭제 */
+	@Override
+	public int deleteCart(int cartId) {
+		
+		return cartMapper.deleteCart(cartId);
+	}
 }

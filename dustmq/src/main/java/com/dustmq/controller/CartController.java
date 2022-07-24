@@ -54,4 +54,22 @@ public class CartController {
 		return "/cart";
 	}
 	
+	/* 장바구니 수량 수정 */
+	@PostMapping("/cart/update")
+	public String updateCartPOST(CartVO cart) {
+		
+		cartService.modifyCount(cart);	// 수량 수정
+		
+		return "redirect:/cart/" + cart.getMemberId();	// 장바구니 페이지 이동
+		
+	}
+	
+	/* 장바구니 품목 삭제 */
+	@PostMapping("/cart/delete")
+	public String deleteCartPOST(CartVO cart) {
+		
+		cartService.deleteCart(cart.getCartId());
+		
+		return "redirect:/cart/" + cart.getMemberId();	// 장바구니 페이지 이동
+	}
 }

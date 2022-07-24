@@ -168,6 +168,12 @@
 
 		</div>
 		
+		<!-- 주문 form -->
+		<form action="/order/${member.memberId}" method="get" class="order_form">
+			<input type="hidden" name="orders[0].bookId" value="${goodsInfo.bookId}">
+			<input type="hidden" name="orders[0].bookCount" value="">	<!-- 수량은 사용자가 바로구매 버튼을 눌렀을 때 확정 (js 코드) -->
+		</form>
+		
 		 <%@include file="./includes/admin/footer.jsp" %>	<!-- footer --> 
 		
 	</div>	<!-- class="wrap" -->
@@ -263,6 +269,14 @@ $(document).ready(function(){
 			alert("로그인 후 이용가능합니다.");
 		}	
 	}
+	
+	/* 바로구매 버튼 */
+	$(".btn_buy").on("click", function(){
+		
+		let bookCount = $(".quantity_input").val();
+		$(".order_form").find("input[name='orders[0].bookCount']").val(bookCount);
+		$(".order_form").submit();
+	});
 
 </script>
 

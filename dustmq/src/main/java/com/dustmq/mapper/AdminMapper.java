@@ -6,6 +6,7 @@ import com.dustmq.model.AttachImageVO;
 import com.dustmq.model.BookVO;
 import com.dustmq.model.CateVO;
 import com.dustmq.model.Criteria;
+import com.dustmq.model.OrderVO;
 
 public interface AdminMapper {
 	
@@ -41,6 +42,12 @@ public interface AdminMapper {
 	
 	/* 지정 상품 이미지 정보 얻기 */
 	public List<AttachImageVO> getAttachInfo(int bookId);
+	
+	/* 주문한 상품 리스트 */
+	public List<OrderVO> getOrderList(Criteria cri);
+	
+	/* 주문 총 개수 */
+	public int getOrderTotal(Criteria cri);
 	
 	
 }

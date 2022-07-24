@@ -2,76 +2,47 @@ package com.dustmq.model;
 
 import java.util.List;
 
-/* 장바구니 DTO */
-public class CartVO {
+/* 뷰에서 전달받을 객체 */
+public class OrderPageItemVO {
 
-	// vam_cart 속성
-	private int cartId;
+	/* 뷰로부터 전달 받을 값 */
+	private int bookId;	
 	
-	private String memberId;
+	private int bookCount;
 	
-	private int bookId;
-		
-	private int bookCount;	// 수량
-	
-	// vam_book의 속성, 이 후 cart테이블과 조인하기 위해 추가
+	/* DB로부터 꺼내올 값 */
 	private String bookName;
 	
 	private int bookPrice;
 	
-	private double bookDiscount;	
+	private double bookDiscount;
 	
-	// 추가 컬럼
-	private int salePrice;	// 판매가 (할인 적용가)
+	/* 만들어 낼 값 */
+	private int salePrice;	// 할인가
 	
-	private int totalPrice;	// 총 가격
+	private int totalPrice;	// 총 지불액
 	
-	// 포인트
-	private int point;
-	private int totalPoint;
+	private int point;		// 포인트
 	
-	// 상품 이미지
+	private int totalPoint;	// 총 사용할 포인트
+	
+	/* 상품 이미지 */
 	private List<AttachImageVO> imageList;
 	
-	// salePrice 와 totalPrice 초기화 메서드
+	/* 아래 변수들은 DB에서 꺼내올 수 있는 데이터가 아니라 bookPrice, bookCount, bookDiscount를 이용해서 만듦 */
 	public void initSaleTotal() {
 		this.salePrice = (int)(this.bookPrice * (1 - this.bookDiscount));
 		this.totalPrice = this.salePrice * this.bookCount;
 		this.point = (int)(Math.floor(this.salePrice * 0.05));
 		this.totalPoint = this.point * this.bookCount;
 	}
-	
-	
+
 	public List<AttachImageVO> getImageList() {
 		return imageList;
 	}
 
 	public void setImageList(List<AttachImageVO> imageList) {
 		this.imageList = imageList;
-	}
-
-	public int getPoint() {
-		return point;
-	}
-
-	public int getTotalPoint() {
-		return totalPoint;
-	}
-
-	public int getCartId() {
-		return cartId;
-	}
-
-	public void setCartId(int cartId) {
-		this.cartId = cartId;
-	}
-
-	public String getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
 	}
 
 	public int getBookId() {
@@ -118,15 +89,39 @@ public class CartVO {
 		return salePrice;
 	}
 
+	public void setSalePrice(int salePrice) {
+		this.salePrice = salePrice;
+	}
+
 	public int getTotalPrice() {
 		return totalPrice;
 	}
 
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
+	public int getTotalPoint() {
+		return totalPoint;
+	}
+
+	public void setTotalPoint(int totalPoint) {
+		this.totalPoint = totalPoint;
+	}
+
 	@Override
 	public String toString() {
-		return "CartVO [cartId=" + cartId + ", memberId=" + memberId + ", bookId=" + bookId + ", bookCount=" + bookCount
-				+ ", bookName=" + bookName + ", bookPrice=" + bookPrice + ", bookDiscount=" + bookDiscount
-				+ ", salePrice=" + salePrice + ", totalPrice=" + totalPrice + ", point=" + point + ", totalPoint="
-				+ totalPoint + ", imageList=" + imageList + "]";
+		return "OrderPageItemVO [bookId=" + bookId + ", bookCount=" + bookCount + ", bookName=" + bookName
+				+ ", bookPrice=" + bookPrice + ", bookDiscount=" + bookDiscount + ", salePrice=" + salePrice
+				+ ", totalPrice=" + totalPrice + ", point=" + point + ", totalPoint=" + totalPoint + ", imageList="
+				+ imageList + "]";
 	}
 }

@@ -34,6 +34,7 @@ import com.dustmq.model.AttachImageVO;
 import com.dustmq.model.AuthorVO;
 import com.dustmq.model.BookVO;
 import com.dustmq.model.Criteria;
+import com.dustmq.model.OrderVO;
 import com.dustmq.model.PageDTO;
 import com.dustmq.service.AdminService;
 import com.dustmq.service.AuthorService;
@@ -519,6 +520,22 @@ public class AdminController {
 			}	// catch
 			
 			return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
+	
+	/* 주문 현황 페이지 */
+	@GetMapping("/orderList")
+	public String orderListGET(Criteria cri, Model model) {
+		
+		List<OrderVO> list = adminService.getOrderList(cri);
+		
+		if(!list.isEmpty()) {	// List의 요소에 객체가 있다면
+				model.addAttribute("list", list);	// list의 정보를 뷰로 보내줌
+				model.addAttribute("pageMaker", new PageDTO(cri, adminService.getOrderTotal(cri)));	// 페이지 정보를 뷰로 전달
+		} else {	// 요소에 객체가 있다면
+				model.addAttribute("listCheck", "empty");
+		}
+		
+		return "/admin/orderList";
 	}
 	
 }

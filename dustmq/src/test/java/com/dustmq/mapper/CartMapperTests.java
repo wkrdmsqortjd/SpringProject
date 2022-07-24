@@ -81,7 +81,7 @@ public class CartMapperTests {
 	public void checkCartTest() {
 		
 		String memberId = "wkrdmsqortjd";
-		int bookId = 283;
+		int bookId = 282;
 		
 		CartVO cart = new CartVO();
 		cart.setMemberId(memberId);
@@ -90,5 +90,19 @@ public class CartMapperTests {
 		CartVO resutlCart = cartMapper.checkCart(cart);
 		System.out.println("결과 : " + resutlCart);
 		
+	}
+	
+	/* 장바구니 제거 - 주문 처리 */
+	@Test
+	public void deleteOrderCart() {
+		
+		String memberId = "admin";
+		int bookId = 285;
+		
+		CartVO cvo = new CartVO();
+		cvo.setMemberId(memberId);
+		cvo.setBookId(bookId);
+		
+		cartMapper.deleteOrderCart(cvo);
 	}
 }
