@@ -52,6 +52,9 @@
 		                    			<td><fmt:formatDate value="${list.orderDate}" pattern="yyyy-MM-dd"/></td>
 		                    			<td><c:out value="${list.orderState}"/></td>
 		                    			<td>
+		                    				<c:if test="${list.orderState == '배송준비' }">
+		                    					<button class="delete_btn" data-orderid="${list.orderId}">주문 취소</button>
+	                    					</c:if>
 		                    			</td>
 		                    		</tr>
 	                    		</c:forEach>
@@ -115,6 +118,14 @@
 						<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
 					</form>
                                      
+                    <!-- 주문 취소 눌렀을 때 서버 요청 --> 
+                    <form id="deleteForm" action="/admin/orderCancel" method="post">
+                    		<input type="hidden" name="orderId">
+                    		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+							<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+							<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+							<input type="hidden" name="memberId" value="${member.memberId}">
+                    </form> 
                 </div>
 			
 			 <%@include file="../includes/admin/footer.jsp" %>	<!-- footer -->
@@ -149,8 +160,20 @@
 		console.log($(this).attr("href"));	
 		
 		moveForm.find("input[name='pageNum']").val($(this).attr("href"));	/* 각 눌렀던 href의 속성을 추가 */
-		
+		 
 		moveForm.submit();
+		
+	});
+	
+	/* 최소 버튼 클릭 */
+	$(".delete_btn").on("click", function(e){
+		
+		e.preventDefault();
+		
+		let id = $(this).data("orderid");	/* 버튼에 orderId 데이터 값을 id에 저장 */
+
+		$("#deleteForm").find("input[name='orderId']").val(id);
+		$("#deleteForm").submit();
 		
 	});
 

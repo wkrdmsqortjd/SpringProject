@@ -26,8 +26,9 @@
   	<select id="memberLogin" resultType="com.dustmq.model.MemberVO">
       
        <!-- select memberId, memberName, adminck, money, point from book_member where memberId = #{memberId} and memberPw = #{memberPw} -->
-       <!-- where문에 아이디만 확인하도록 해주고, 반환받는 데이터에 비밀번호도 추가 -->
-       select memberId, memberPw, memberName, adminck, money, point from book_member where memberId = #{memberId}	
+       <!-- where문에 아이디만 확인하도록 해주고, 반환받는 데이터에 비밀번호도 추가 (비밀번호 BCrypt사용 전 쿼리)-->
+       select memberId, memberPw, memberName, adminck, money, point from book_member
+       where memberId = #{memberId}	
       	
     </select>
     

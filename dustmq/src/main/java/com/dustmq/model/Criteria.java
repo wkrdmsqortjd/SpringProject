@@ -24,7 +24,18 @@ public class Criteria {
     /* 카테고리 코드 */
     private String cateCode;
     
-    public String[] getAuthorArr() {
+    /* 상품 번호(댓글 기능) */
+    private int bookId;
+    
+    public int getBookId() {
+		return bookId;
+	}
+
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
+	}
+
+	public String[] getAuthorArr() {
 		return authorArr;
 	}
 
@@ -93,8 +104,7 @@ public class Criteria {
 	@Override
 	public String toString() {
 		return "Criteria [pageNum=" + pageNum + ", amount=" + amount + ", type=" + type + ", keyword=" + keyword
-				+ ", authorArr=" + Arrays.toString(authorArr) + ", cateCode=" + cateCode + "]";
+				+ ", authorArr=" + Arrays.toString(authorArr) + ", cateCode=" + cateCode + ", bookId=" + bookId + "]";
 	}
-
 	
 }

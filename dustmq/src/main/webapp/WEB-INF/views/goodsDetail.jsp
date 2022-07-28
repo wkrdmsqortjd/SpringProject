@@ -126,8 +126,8 @@
 						<div class="sale_price">정가 : <fmt:formatNumber value="${goodsInfo.bookPrice}" pattern="#,### 원" /></div>
 						<div class="discount_price">
 							판매가 : <span class="discount_price_number"><fmt:formatNumber value="${goodsInfo.bookPrice - (goodsInfo.bookPrice*goodsInfo.bookDiscount)}" pattern="#,### 원" /></span> 
-							[<fmt:formatNumber value="${goodsInfo.bookDiscount*100}" pattern="###" />% 
-							<fmt:formatNumber value="${goodsInfo.bookPrice*goodsInfo.bookDiscount}" pattern="#,### 원" /> 할인]</div>							
+							[<fmt:formatNumber value="${goodsInfo.bookDiscount * 100}" pattern="###" />% 
+							<fmt:formatNumber value="${goodsInfo.bookPrice * goodsInfo.bookDiscount}" pattern="#,### 원" /> 할인]</div>							
 					</div>		
 					<div>
 						적립 포인트 : <span class="point_span"></span>원
@@ -163,9 +163,31 @@
 			<div class="line">
 			</div>				
 			<div class="content_bottom">
-				리뷰
-			</div>
+				<div class="reply_subject">
+					<h2>리뷰</h2>
+				</div>
+				
+				<!-- 로그인한 회원에게만 보이도록 if태그 사용 -->
+				<c:if test="${member != null }">
+					<div class="reply_button_wrap">
+						<button>리뷰 등록</button>				
+					</div>
+				</c:if>
+				
+				<!-- 동적으로 구현할 태그의 데이터 -->
+				<div class="reply_not_div">			<!-- 댓글이 없을 경우 -->
+				
+				</div>
+				
+				<ul class="reply_content_ul">		<!-- 댓글이 존재할 때 '페이징 댓글 정보' 가 삽입 -->
+				</ul>				
+				
+				<div class="reply_pageInfo_div">	<!-- 댓글 페이지 버튼이 삽입될 태그 -->
+					<ul class="pageMaker">
 
+					</ul>
+				</div>
+			</div>
 		</div>
 		
 		<!-- 주문 form -->
@@ -202,7 +224,7 @@ $(document).ready(function(){
 		bobj.find("img").attr('src', '/resources/img/no_Image.png'); 
 	}
 	
-	/* 출판일 변환(String -> Date) */
+	/* 출판일 - 변환(String -> Date) */
 	const year = "${goodsInfo.publeYear}";
 	
 	let tempYear = year.substr(0,10);
@@ -218,7 +240,18 @@ $(document).ready(function(){
 	point = Math.floor(point);		// 반올림(소수점 나머지를 제거)
 	$(".point_span").text(point);	// text를 읽음
 	
+	/* 리뷰 리스트 출력 */
+	const bookId = '${goodsInfo.bookId}';
+	
+	$.getJSON("/reply/list", {bookId : bookId}, function(obj){
+
+		/* 댓글 페이지, 페이징 정보 함수 호출 */
+		makeReplyContent(obj);	
+		
+	});
+	
 });	// $(document).ready(function())
+
 
 	/* 수량 버튼 조작 */
 	let quantity = $(".quantity_input").val();
@@ -247,15 +280,15 @@ $(document).ready(function(){
 	$(".btn_cart").on("click", function(e){
 		
 		form.bookCount = $(".quantity_input").val();	// 추가 버튼을 누르면 수량의 값이 bookCount에 할당
+		
 		$.ajax({
 				url: '/cart/add',			// 호출할 url
 				type: 'POST',				// 호출할 방법
 				data: form,					// 서버로 보낼 데이터
 				success: function(result){	// 서버가 요청을 성공적으로 수행했을 때 수행될 메서드, 파라미터는 서버가 반환한 값
-						console.log(result);
 						cartAlert(result);
 					}	
-		})	// $.ajax()
+		});	// $.ajax()
 	});
 	
 	function cartAlert(result){
@@ -278,6 +311,183 @@ $(document).ready(function(){
 		$(".order_form").submit();
 	});
 
+	/* 리뷰 등록 */
+	$(".reply_button_wrap").on("click", function(e){
+		
+		e.preventDefault();
+		
+		const memberId = '${member.memberId}';
+		const bookId = '${goodsInfo.bookId}';
+		
+		/* 댓글 확인 요청 */
+		$.ajax({
+			
+			data : {
+					bookId : bookId,
+					memberId : memberId
+			},
+			url : '/reply/check',
+			type : 'POST',
+			success : function(result){
+				
+				if(result === '1'){
+					alert("이미 등록된 리뷰가 존재 합니다.")
+				} else if(result === '0') {
+					let popUrl = "/replyEnroll/" + memberId + "?bookId=" + bookId;
+					console.log(popUrl);
+					let popOption = "width = 490px, height=490px, top=300px, left=300px, scrollbars=yes";
+					
+					window.open(popUrl,"리뷰 쓰기",popOption);							
+				}
+				
+			}
+		});	// ajax()
+	});
+	
+	/* 댓글 페이지 정보 객체 */
+	const cri = {
+		bookId : '${goodsInfo.bookId}',
+		pageNum : 1,
+		amount : 10
+	}
+	
+	/* 댓글 페이지 이동 버튼 동작 */
+	$(document).on('click', '.pageMaker_btn a', function(e){
+		
+		e.preventDefault();
+		
+		/* 회원이 클릭한 페이지 번호 */
+		let page = $(this).attr("href");
+		
+		/* 현제 페이지 정보를 저장하는 cri 객체의 pageNum의 속성 값을 사용자가 클릭한 숫자로 변경 후 대입 */
+		cri.pageNum = page;
+		
+		/* 댓글 리스트를 서버에 요청 후 댓글 태그를 최신화 하는 replyListInit() 함수 호출 */
+		replyListInit();
+		
+	});
+	
+	/* 댓글 데이터 서버 요청 및 댓글 동적 생성 함수 */
+	let replyListInit = function(){
+		$.getJSON("/reply/list", cri , function(obj){
+			
+			makeReplyContent(obj);
+			
+		});		
+	}	
+	
+	/* 리뷰 수정 버튼 */
+	$(document).on('click', '.update_reply_btn', function(e){
+		
+		e.preventDefault();
+		
+		let replyId = $(this).attr("href");
+		let popUrl = "/replyUpdate?replyId=" + replyId + "&bookId=" + '${goodsInfo.bookId}' + "&memberId=" + '${member.memberId}';
+		let popOption = "width = 490px, height=490px, top=300px, left=300px, scrollbars=yes"
+	
+		window.open(popUrl, "리뷰 수정", popOption);
+	});
+	
+	/* 리뷰 삭제 버튼 */
+	 $(document).on('click', '.delete_reply_btn', function(e){
+
+		 e.preventDefault();
+		 
+		 let replyId = $(this).attr("href");	
+		 
+		 $.ajax({
+				data : {
+					replyId : replyId,
+					bookId : '${goodsInfo.bookId}'
+				},
+				url : '/reply/delete',
+				type : 'POST',
+				success : function(result){
+					replyListInit();
+// 					alert('삭제가 완료되었습니다.');	
+				}
+			});	// $.ajax()	
+		 
+	 });
+	
+	/* 댓글 동적 생성 함수 */
+	function makeReplyContent(obj) {	// obj는 서버로부터 전달받은 댓글 데이터 정보
+		
+		if(obj.list.length === 0){
+			$(".reply_not_div").html('<span>리뷰가 없습니다.</span>');
+			$(".reply_content_ul").html('');
+			$(".pageMaker").html('');
+		} else{
+			
+			$(".reply_not_div").html('');
+			
+			const list = obj.list;
+			const pf = obj.pageInfo;
+			const userId = '${member.memberId}';		
+			
+			/* list */
+			
+			let reply_list = '';			
+			
+			$(list).each(function(i,obj){
+				reply_list += '<li>';
+				reply_list += '<div class="comment_wrap">';
+				reply_list += '<div class="reply_top">';
+				
+				/* 아이디 */
+				reply_list += '<span class="id_span">'+ obj.memberId+'</span>';
+				/* 날짜 */
+				reply_list += '<span class="date_span">'+ obj.regDate +'</span>';
+				/* 평점 */
+				reply_list += '<span class="rating_span">평점 : <span class="rating_value_span">'+ obj.rating +'</span>점</span>';
+				
+				if(obj.memberId === userId){
+					reply_list += '<a class="update_reply_btn" href="'+ obj.replyId +'">수정</a><a class="delete_reply_btn" href="'+ obj.replyId +'">삭제</a>';
+				}
+				reply_list += '</div>';		 //<div class="reply_top">
+				reply_list += '<div class="reply_bottom">';
+				reply_list += '<div class="reply_bottom_txt">'+ obj.content +'</div>';
+				reply_list += '</div>';		//<div class="reply_bottom">
+				reply_list += '</div>';		//<div class="comment_wrap">
+				reply_list += '</li>';
+			});		
+			
+			$(".reply_content_ul").html(reply_list);			
+			
+			/* 페이지 버튼 */
+			let reply_pageMaker = '';	
+			
+				/* 이전 */
+				if(pf.prev){
+					let prev_num = pf.pageStart -1;
+					reply_pageMaker += '<li class="pageMaker_btn prev">';
+					reply_pageMaker += '<a href="'+ prev_num +'">이전</a>';
+					reply_pageMaker += '</li>';	
+				}
+				/* 숫자(버튼) */
+				for(let i = pf.pageStart; i < pf.pageEnd+1; i++){
+					reply_pageMaker += '<li class="pageMaker_btn ';
+					if(pf.cri.pageNum === i){
+						reply_pageMaker += 'active';
+					}
+					reply_pageMaker += '">';
+					reply_pageMaker += '<a href="'+i+'">'+i+'</a>';
+					reply_pageMaker += '</li>';
+				}
+				/* 다음 */
+				if(pf.next){
+					let next_num = pf.pageEnd +1;
+					reply_pageMaker += '<li class="pageMaker_btn next">';
+					reply_pageMaker += '<a href="'+ next_num +'">다음</a>';
+					reply_pageMaker += '</li>';	
+				}	
+				
+			$(".pageMaker").html(reply_pageMaker);				
+			
+		}
+		
+	}
+	
 </script>
 
 </body>

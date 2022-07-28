@@ -62,7 +62,7 @@
   </update>
   
   <!-- 주문 상품 정보 - 주문 취소한 상품 -->
-  <select id="getOrderItemInfo" resultType="com.dustmq.OrderItemVO">
+  <select id="getOrderItemInfo" resultType="com.dustmq.model.OrderItemVO">
   	
   	select * from vam_orderItem
   	where orderId = #{orderId}

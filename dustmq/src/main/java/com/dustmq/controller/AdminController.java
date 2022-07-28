@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,10 +36,14 @@ import com.dustmq.model.AttachImageVO;
 import com.dustmq.model.AuthorVO;
 import com.dustmq.model.BookVO;
 import com.dustmq.model.Criteria;
+import com.dustmq.model.MemberVO;
+import com.dustmq.model.OrderCancelVO;
 import com.dustmq.model.OrderVO;
 import com.dustmq.model.PageDTO;
 import com.dustmq.service.AdminService;
 import com.dustmq.service.AuthorService;
+import com.dustmq.service.MemberService;
+import com.dustmq.service.OrderService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -55,6 +61,11 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 
+	@Autowired
+	private OrderService orderService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	/* 관리자 메인 페이지 이동 */
 	@RequestMapping(value="main", method = RequestMethod.GET)
@@ -536,6 +547,39 @@ public class AdminController {
 		}
 		
 		return "/admin/orderList";
+	}
+	
+	/* 주문 취소 (삭제) */
+	@PostMapping("/orderCancel")
+	public String orderCanclePOST(OrderCancelVO vo, HttpServletRequest request) {
+		
+		orderService.orderCancle(vo);
+		
+		/* 최신화 하기위한 회원 객체 생성 */	
+		MemberVO member = new MemberVO();	
+		member.setMemberId(vo.getMemberId());	// 상품 취소한 회원 아이디를 세팅
+		
+		/* 상품 취소 후 사용자 정보를 최신화 */
+		
+		// 세션을 이용하기위해 선언 및 session을 가져옴
+		HttpSession session = request.getSession();
+		
+		try {
+				// 상품 취소한 회원의 로그인 정보를 memberLogin에 저장
+				MemberVO memberLogin = memberService.memberLogin(member);
+				
+				// 비밀 번호는 그대로 유지하기 위해 "" 빈 칸을 저장(빈 칸을 저장하면 원래 비밀번호가 유지)
+				memberLogin.setMemberPw("");
+				
+				// session에 해당 회원의 정보를 저장
+				session.setAttribute("member", memberLogin);
+		
+		} catch (Exception e) {
+				e.printStackTrace();
+		}
+		
+		// 원래 있었던 페이지에 redirect 형식으로 이동
+		return "redirect:/admin/orderList?keyword=" + vo.getKeyword() + "&amount=" + vo.getAmount() + "&pageNum=" + vo.getPageNum();
 	}
 	
 }

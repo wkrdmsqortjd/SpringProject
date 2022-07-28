@@ -24,8 +24,10 @@ import com.dustmq.model.AttachImageVO;
 import com.dustmq.model.BookVO;
 import com.dustmq.model.Criteria;
 import com.dustmq.model.PageDTO;
+import com.dustmq.model.ReplyVO;
 import com.dustmq.service.AttachService;
 import com.dustmq.service.BookService;
+import com.dustmq.service.ReplyService;
 
 // 메인페이지, 이동, 상품 검색 등의 요청을 관리
 
@@ -41,6 +43,9 @@ public class BookController {
 	
 	@Autowired
 	private BookService bookService;
+	
+	@Autowired
+	private ReplyService replyService;
 	
 	/*  이미지 정보 반환 */			// 반환해주는 데이터가 JSON 형식이 되도록 produces 속성 추가
 	@GetMapping(value="/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -134,5 +139,31 @@ public class BookController {
 		model.addAttribute("goodsInfo", bookService.getGoodsInfo(bookId));
 		
 		return "/goodsDetail";
+	}
+	
+	/* 리뷰 등록 */
+	@GetMapping("/replyEnroll/{memberId}")
+	public String replyEnrollWindowGET(@PathVariable("memberId")String memberId, int bookId, Model model) {
+		
+		BookVO book = bookService.getBookIdName(bookId);
+		model.addAttribute("bookInfo", book);
+		model.addAttribute("memberId", memberId);
+		
+		return "/replyEnroll";
+	}
+	
+	/* 리뷰 수정 팡업창 */
+	@GetMapping("/replyUpdate")
+	public String replyUpdateWindowGET(ReplyVO vo, Model model) {
+	
+		// 해당하는 상품의 이름 정보를 book에 저장
+		BookVO book = bookService.getBookIdName(vo.getBookId());
+		
+		// model을 통해 정보 전달
+		model.addAttribute("bookInfo", book);
+		model.addAttribute("replyInfo", replyService.getUpdateReply(vo.getReplyId()));
+		model.addAttribute("memberId", vo.getMemberId());
+		
+		return "/replyUpdate";
 	}
 }

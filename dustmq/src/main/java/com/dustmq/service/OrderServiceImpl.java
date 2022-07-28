@@ -18,6 +18,7 @@ import com.dustmq.model.AttachImageVO;
 import com.dustmq.model.BookVO;
 import com.dustmq.model.CartVO;
 import com.dustmq.model.MemberVO;
+import com.dustmq.model.OrderCancelVO;
 import com.dustmq.model.OrderItemVO;
 import com.dustmq.model.OrderPageItemVO;
 import com.dustmq.model.OrderVO;
@@ -147,6 +148,50 @@ public class OrderServiceImpl implements OrderService {
 				cart.setBookId(oiv.getBookId());
 				
 				cartMapper.deleteOrderCart(cart);
+		}
+	}
+
+	/* 주문 취소 */
+	@Override
+	@Transactional
+	public void orderCancle(OrderCancelVO ocvo) {
+
+		MemberVO member = memberMapper.getMemberInfo(ocvo.getMemberId());	// 회원 정보
+		
+		/* 주문 상품 */
+		List<OrderItemVO> orders = orderMapper.getOrderItemInfo(ocvo.getOrderId());	// 주문 상품 정보
+		for(OrderItemVO order : orders) {
+				order.initSaleTotal();		// 가격 정보
+		}
+		
+		/* 주문 */
+		OrderVO ords = orderMapper.getOrder(ocvo.getOrderId());	// 주문 정보
+		ords.setOrders(orders);
+
+		ords.getOrderPriceInfo();	// 주문에 필요한 데이터 세팅 (비용 , 포인트)
+		
+		/* 주문 상품 취소 DB 데이터(배송준비 -> 주문취소) */
+		orderMapper.orderCancle(ocvo.getOrderId());
+		
+		/* 돈 */
+		int fluMoney = member.getMoney();
+		fluMoney += ords.getOrderFinalSalePrice();
+		member.setMoney(fluMoney);
+		
+		/* 포인트 */
+		int fluPoint = member.getPoint();
+		fluPoint = fluPoint + ords.getUsePoint() - ords.getOrderSavePoint();
+		member.setPoint(fluPoint);
+		
+		/* 재고 */
+		orderMapper.deductMoney(member);
+		
+		// 주문한 상품들을 하나씩 order에 대입
+		for(OrderItemVO order : ords.getOrders()) {
+			
+				BookVO book = bookMapper.getGoodsInfo(order.getBookId());
+				book.setBookStock(book.getBookStock() + order.getBookCount());
+				orderMapper.deductStock(book);
 		}
 	}
 

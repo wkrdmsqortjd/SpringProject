@@ -164,9 +164,9 @@ a{
 		    font-size: 50px;
 		    font-weight: bolder; 
 		 }
-
-/* 주문자의 정보 */
-.content_main{
+	 
+/* content_main */
+ .content_main{
     min-height: 700px;
     padding-right: 350px;
     position: relative;
@@ -175,7 +175,7 @@ a{
  	border-collapse: collapse;
  }
  
-  /* 사용자 정보  */
+ /* 사용자 정보  */
  .memberInfo_table{
     width: 100%;
     border-spacing: 0;
@@ -186,6 +186,8 @@ a{
  	padding : 12px;
  	text-align: left;
  }
+
+
  /* 사용자 주소 정보 */
  .addressInfo_div{
  	margin-top: 30px;
@@ -245,7 +247,7 @@ a{
     color: #555;
     cursor: pointer;
 }
-
+/* 주문상품 정보 */
 .orderGoods_div{
 	margin-top:30px;
 }
@@ -281,10 +283,11 @@ height: 110px;
 	text-align: center;
 }
 
+
 /* 포인트 영역 */
 .point_div{
 	margin-top: 30px;
-    margin-bottom: 50px;
+	margin-bottom: 50px;	
 }
 .point_div_subject{
 	font-size: 25px;
@@ -326,6 +329,7 @@ height: 110px;
     cursor: pointer;
     font-size: 12px;
 }
+
 /* 주문 종합 정보 */
 .total_info_div{
 	position:absolute;
@@ -390,12 +394,14 @@ height: 110px;
 	width: 100%;
 	height: 100%;
 }
-
 .image_wrap img{
     max-width: 85%;
     height: auto;
     display: block;		
 }
+
+
+
 
 /* 로그인 성공 영역 */
 .login_success_area{
@@ -483,6 +489,8 @@ height: 110px;
 	display: none;
 }
 
+
+
 /* footer navai 영역 */
 .footer_nav{
 	width:100%;
@@ -543,6 +551,7 @@ height: 110px;
 	margin-left: 70px;
 	margin-top : 30px;
 }
+
 
 /* float 속성 해제 */
 .clearfix{

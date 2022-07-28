@@ -1,7 +1,7 @@
 package com.dustmq.model;
 
 /* 주문 취소에 관한 정보를 담는 그릇 */
-public class OrderCancleVO {
+public class OrderCancelVO {
 	
 	/* 주문 취소에 필요한 데이터 */
 	private String memberId;	// 멤버 아이디

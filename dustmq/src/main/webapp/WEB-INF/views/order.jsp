@@ -30,6 +30,7 @@
 						<a href="/member/join">회원가입</a>
 					</li>
 				</c:if>
+				
 				<c:if test="${member != null }">	<!-- 로그인 o -->		
 					<c:if test="${member.adminCk == 1 }">	<!-- 관리자 계정 -->
 						<li><a href="/admin/main">관리자 페이지</a></li>
@@ -68,6 +69,7 @@
                 		</form>
                 	</div>
 			</div>
+			
 			<div class="login_area">
 			
 				<!-- 로그인 하지 않은 상태 -->
@@ -85,11 +87,10 @@
 						<a href="/member/logout.do">로그아웃</a>
 					</div>
 				</c:if>
-				
+			
 			</div>
 			<div class="clearfix"></div>			
 		</div>
-		
 		<div class="content_area">
 		
 			<div class="content_subject"><span>장바구니</span></div>
@@ -98,10 +99,12 @@
 				<!-- 회원 정보 -->
 				<div class="member_info_div">
 					<table class="table_text_align_center memberInfo_table">
-						<tr>
-							<th style="width: 25%;">주문자</th>
-							<td style="width: *">${memberInfo.memberName} | ${memberInfo.memberMail}</td>
-						</tr>
+						<tbody>
+							<tr>
+								<th style="width: 25%;">주문자</th>
+								<td style="width: *">${memberInfo.memberName} | ${memberInfo.memberMail}</td>
+							</tr>
+						</tbody>
 					</table>
 				</div>
 				
@@ -172,7 +175,7 @@
 						</div>
 				</div>
 			</div>
-			</div>
+			
 				<!-- 상품 정보 -->
 				<div class="orderGoods_div">
 					<!-- 상품 종류 -->
@@ -305,6 +308,8 @@
 			<input name="usePoint" type="hidden">
 			<!-- 상품 정보 -->
 		</form>
+		
+	</div>	<!-- class="content_area" -->
 		
 		 <%@include file="./includes/admin/footer.jsp" %>	<!-- footer --> 
 		
