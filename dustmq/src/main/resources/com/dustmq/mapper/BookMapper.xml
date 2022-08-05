@@ -53,7 +53,7 @@
 	
 		<![CDATA[
 			select * from(
-				select /*+INDEX_DECS(vam_book SYS_C008313)*/ rownum as rn, bookId, bookName,
+				select /*+INDEX_DECS(vam_book SYS_C008313)*/ rownum as rn, bookId, bookName, ratingAvg, 
 					(select authorName from vam_author where vam_book.authorId = vam_author.authorId) authorName, authorId,
 		            (select cateName from vam_bcate where vam_book.cateCode = vam_bcate.cateCode) cateName,cateCode, publisher, publeYear, bookPrice, bookDiscount 
 				from vam_book
@@ -106,11 +106,12 @@
 	
 	</select>
   
-  	<!-- 검색 대상 카테고리 리스트 (X)-->
+  	<!-- 검색 대상 카테고리 리스트 - 코드번호 반환 -->
   	<select id="getCateList" resultType="String">
   	
-  		<!-- DISTINCT는 select 조회시 중복 컬럼을 제거해준다. -->
-  		select DISTINCT cateCode from vam_book where
+  		<!-- DISTINCT는 select 조회시 중복 컬럼을 제거해주고, 중복되지 않은 컬럼만 출력 -->
+  		select DISTINCT cateCode from vam_book
+  		where
   		<foreach item="type" collection="typeArr">
 				<choose>
 					<when test="type == 'A'.toString()">	<!-- 작가 검색 -->
@@ -125,31 +126,47 @@
 					</when>
 					<when test="type == 'T'.toString()">	<!-- 책 제목 검색 -->
 							bookName like '%' || #{keyword} || '%'
+						<!-- select distinct cateCode from vam_book where select distinct cateCode from vam_book where bookName like '%' || #{keyword} || '%' -->
 					</when>
 				</choose>
   		</foreach>  	
   	</select>
   	
-  	<!-- 카테고리 정보(이름, 번호 + 검색 대상 수 (X) -->
+  	<!-- 카테고리 정보(이름, 번호 + 검색 대상 수) -->
   	<select id="getCateInfo" resultType="com.dustmq.model.CateFilterVO">
 	
-		select DISTINCT count(*) cateCount, a.cateCode, b.cateName from vam_book a left join vam_bcate b on a.cateCode = b.cateCode 
+		<!-- count(*) 뒤에 별칭을 적은 이유는 MyBatis의 자바 빈 규약에 따라 지정한 반환 타입에 데이터를 세팅하기 때문 -->
+		select DISTINCT count(*) cateCount, a.cateCode, b.cateName
+		from vam_book a left join vam_bcate b on a.cateCode = b.cateCode 
 		where 
 
 		<foreach item="type" collection="typeArr">		
   				<choose>
-  					<when test="type == 'A'.toString()">
+  					<when test="type == 'A'.toString()">	<!-- 작가 이름 검색 -->
+  					
   						<trim prefix="(" suffix=")" prefixOverrides="or">
+		  			
 		  					<foreach collection="authorArr" item="authorId">
+		  			
 		  						<trim prefix="or">
+		  			
 		  							authorId = #{authorId}
+		  							<!-- (authorId = #{authorId} or authorId = #{authorId}...) -->
 		  						</trim>
+		  			
 		  					</foreach>
+  					
   						</trim>
+  					
   						and a.cateCode = #{cateCode}
+
   					</when>
-  					<when test="type == 'T'.toString()">
-  						bookName like '%' || #{keyword} || '%' and a.cateCode = #{cateCode}
+  					
+  					<when test="type == 'T'.toString()">	<!-- 책 제목 검색 -->
+  					
+  						bookName like '%' || #{keyword} || '%'
+  						and a.cateCode = #{cateCode}
+  					
   					</when>
   					  					
   				</choose>
@@ -178,5 +195,22 @@
 		where bookId = #{bookId}
 	
 	</select>
+	
+	<!-- 평점 순 상품정보 -->
+	<select id="likeSelect" resultType="com.dustmq.model.SelectVO">
   
+	 	select * from
+		(select rownum as rn, bookId, bookName, ratingAvg, (select cateName from vam_bcate where vam_book.cateCode = vam_bcate.cateCode) as cateName
+		from vam_book
+		order by ratingAvg desc nulls last)	
+		<![CDATA[									
+		where rn < 9
+		]]>	
+  
+	</select>
+	
+	<!-- 평균값을 위한 book테이블 데이터 조회 구하기 -->
+	
+	
+	
   </mapper>

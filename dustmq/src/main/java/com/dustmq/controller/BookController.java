@@ -28,6 +28,7 @@ import com.dustmq.model.ReplyVO;
 import com.dustmq.service.AttachService;
 import com.dustmq.service.BookService;
 import com.dustmq.service.ReplyService;
+import com.dustmq.service.ReplyServiceImpl;
 
 // 메인페이지, 이동, 상품 검색 등의 요청을 관리
 
@@ -67,6 +68,7 @@ public class BookController {
 		// main.jsp에 카테고리 정보 전달
 		model.addAttribute("cate1", bookService.getCateCode1());
 		model.addAttribute("cate2", bookService.getCateCode2());
+		model.addAttribute("ls", bookService.likeSelect());
 	}
 	
 	/* 이미지 출현 관련 */
@@ -125,6 +127,14 @@ public class BookController {
 		
 		// pageMaker라는 키에 PageDTO객체를 값으로함(한 페이지에 총 게시물 수)
 		model.addAttribute("pageMaker", new PageDTO(cri, bookService.goodsGetTotal(cri)));
+		
+		String[] typeArr = cri.getType().split("");
+				
+				for(String s : typeArr) {
+					if(s.equals("T") || s.equals("A")) {
+						model.addAttribute("filter_info", bookService.getCateInfoList(cri));		
+					}
+				}
 		
 		return "search";
 	}

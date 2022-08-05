@@ -51,6 +51,7 @@
 			<div class="logo_area">
 				<a href="/main"><img src="resources/img/guhaebang_logo.png"></a>
 			</div>
+			
 			<div class="search_area">
                 	<div class="search_wrap">
                 		<form id="searchForm" action="/search" method="get">
@@ -66,8 +67,9 @@
                 		</form>
                 	</div>
 			</div>
+
+			<!-- 로그인 관련 div -->			
 			<div class="login_area">
-			
 				<!-- 로그인 하지 않은 상태 -->
 				<c:if test = "${member == null }">
 					<div class="login_button"><a href="/member/login">로그인</a></div>
@@ -92,6 +94,40 @@
 				
 		<!-- 게시물 O -->
 		<c:if test="${listcheck != 'empty' }">
+				<div class="search_filter">
+					<div class="filter_button_wrap">
+						<button class="filter_button filter_active" id="filter_button_a">국내</button>
+						<button class="filter_button" id="filter_button_b">국외</button>
+					</div>	
+						
+						<!-- 국내 -->
+						<div class="filter_content filter_a">
+							<!-- model 객체를 통해 데이터 전달 -->
+							<c:forEach items="${filter_info}" var="filter">
+								<c:if test="${filter.cateGroup eq '1'}">
+									<a href="${filter.cateCode}">${filter.cateName}(${filter.cateCount})</a>
+								</c:if>		
+							</c:forEach>
+						</div>
+						
+						<!-- 국외 -->
+						<div class="filter_content filter_b">
+							<c:forEach items="${filter_info}" var="filter">
+								<c:if test="${filter.cateGroup eq '2'}">
+									<a href="${filter.cateCode}">${filter.cateName}(${filter.cateCount})</a>
+								</c:if>
+							</c:forEach>
+						</div>	
+						
+						<!-- 필터 정보를 form태그를 통해서 search.jsp에 전달 -->
+						<form id="filter_form" action="/search" method="get" >
+							<input type="hidden" name="keyword">
+							<input type="hidden" name="cateCode">
+							<input type="hidden" name="type">
+						</form>			
+						
+				</div>
+				
 			<!-- 검색결과에 따른 데이터 -->
 			<div class="list_search_result">
 				<table class="type_list">
@@ -116,7 +152,6 @@
 												</div>
 												<div class="title">
 													<a href="/goodsDetail/${list.bookId}">	<!-- @PathVariable -->
-														${list.bookName}
 													</a>
 												</div>
 												<div class="author">
@@ -127,9 +162,9 @@
 												</div>
 										</td>
 										<td class="info">
-											<div class="rating">
-													평점(추후 추가)
-											</div>
+												<div class="rating">
+													${list.ratingAvg} 점
+												</div>
 										</td>
 										<td class="price">
 												<div class="org_price">
@@ -171,7 +206,7 @@
 					<!-- 다음 버튼 -->
 	                <c:if test="${pageMaker.next}">
 	                    <li class="pageMaker_btn next">
-	                   		<a href="${pageMaker.pageEnd + 1 }">다음</a>
+	                   		<a href="${pageMaker.pageEnd + 1}">다음</a>
 	                   	</li>
 	                </c:if>
 				</ul>
@@ -226,6 +261,51 @@
 		
 		moveForm.submit();	// 위 정보들을 서버로 전송
 		
+	});
+	
+	/* 검색 필터 - 버튼을 누름에 따라 해당 필터링의 정보들이 담겨있음 */
+	let buttonA = $("#filter_button_a");
+	let buttonB = $("#filter_button_b");
+	
+	/* 버튼을 눌렀을 때 해당 데이터 이외의 데이터는 안보이게 구현 */
+	buttonA.on("click", function(){
+		$(".filter_b").css("display", "none");
+		$(".filter_a").css("display", "block");		
+		buttonA.attr("class", "filter_button filter_active");
+		buttonB.attr("class", "filter_button");
+	});
+	
+	buttonB.on("click", function(){
+		$(".filter_a").css("display", "none");
+		$(".filter_b").css("display", "block");
+		buttonB.attr("class", "filter_button filter_active");
+		buttonA.attr("class", "filter_button");		
+	});
+	
+	/* 필터링 태그 동작 관련 */
+	$(".filter_content a").on("click", function(e){
+			e.preventDefault();
+			
+			// 검색 타입
+			let type = '<c:out value="${pageMaker.cri.type}"/>';
+			
+			if(type === 'A' || type === 'T'){
+				type = type + 'C';				// 검색 조건이 "AC" , "AT"
+			}
+			
+			// 검색 키워드
+			let keyword = '<c:out value="${pageMaker.cri.keyword}"/>';
+			
+			// 카테고리 코드
+			let cateCode= $(this).attr("href");
+			
+			// <form> 태그에 input 태그안으로 값을 저장
+			$("#filter_form input[name='keyword']").val(keyword);
+			$("#filter_form input[name='cateCode']").val(cateCode);
+			$("#filter_form input[name='type']").val(type);
+			
+			// form태그 전달
+			$("#filter_form").submit();
 	});
 	
 	// <select>태그에 있는 <option>태그에서 selected 속성을 부여해주기 코드 추가

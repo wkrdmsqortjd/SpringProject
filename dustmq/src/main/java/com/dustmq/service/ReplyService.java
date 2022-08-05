@@ -1,8 +1,11 @@
 package com.dustmq.service;
 
+import java.util.List;
+
 import com.dustmq.model.Criteria;
 import com.dustmq.model.ReplyPageDTO;
 import com.dustmq.model.ReplyVO;
+import com.dustmq.model.SelectVO;
 
 public interface ReplyService {
 	
@@ -23,5 +26,6 @@ public interface ReplyService {
 	
 	/* 댓글 삭제 */
 	public int deleteReply(ReplyVO rvo);
+	
 	
 }

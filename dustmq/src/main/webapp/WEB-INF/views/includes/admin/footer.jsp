@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 
                 <div class="clearfix"></div>
-            </div>
         
         <!-- Footer 영역 -->
         <div class="footer_nav">

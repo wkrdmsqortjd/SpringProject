@@ -51,6 +51,17 @@ public class BookVO {
 	/* 수정 날짜 */
 	private Date updateDate;
 	
+	/* 평균 평점 */
+	private double ratingAvg;
+	
+	public double getRatingAvg() {
+		return ratingAvg;
+	}
+
+	public void setRatingAvg(double ratingAvg) {
+		this.ratingAvg = ratingAvg;
+	}
+
 	/* 이미지 정보 */
 	private List<AttachImageVO> imageList;	// 이미지에 대해 필요한 정보들을 가지고있는 AttachImageVO객체를 받고
 											// 서버 단계에서 여러개의 이미지를 처리하기 위해 List 자료구조를 사용
@@ -173,8 +184,6 @@ public class BookVO {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-	
-	
 
 	public List<AttachImageVO> getImageList() {
 		return imageList;
@@ -190,6 +199,7 @@ public class BookVO {
 				+ authorName + ", publeYear=" + publeYear + ", publisher=" + publisher + ", cateCode=" + cateCode
 				+ ", cateName=" + cateName + ", bookPrice=" + bookPrice + ", bookStock=" + bookStock + ", bookDiscount="
 				+ bookDiscount + ", bookIntro=" + bookIntro + ", bookContents=" + bookContents + ", regDate=" + regDate
-				+ ", updateDate=" + updateDate + ", imageList=" + imageList + "]";
+				+ ", updateDate=" + updateDate + ", ratingAvg=" + ratingAvg + ", imageList=" + imageList + "]";
 	}
+
 }

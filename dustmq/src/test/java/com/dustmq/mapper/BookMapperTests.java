@@ -162,14 +162,14 @@ public class BookMapperTests {
 		
 	}
 	
-	/* 카테고리 리스트 (X)*/
+	/* 카테고리 리스트 */
 	@Test
 	public void getCateListTest1() {
 		
 		Criteria cri = new Criteria();
 		
 		String type = "TC";
-		String keyword = "김승현";
+		String keyword = "테스트";
 		// String type = "A";
 		// String keyword = "아르마딜로";
 		
@@ -184,14 +184,14 @@ public class BookMapperTests {
 		}
 	}
 	
-	/* 카테고리 정보 얻기 (X)*/	
+	/* 카테고리 정보 얻기 */	
 	@Test
 	public void getCateInfoTest1() {
 		
 		Criteria cri = new Criteria();
 		
 		String type = "TC";
-		String keyword = "test";	
+		String keyword = "테스트";	
 		String cateCode="101001";
 
 		cri.setType(type);

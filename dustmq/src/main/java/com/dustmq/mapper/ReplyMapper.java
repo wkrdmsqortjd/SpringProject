@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dustmq.model.Criteria;
 import com.dustmq.model.ReplyVO;
+import com.dustmq.model.SelectVO;
 import com.dustmq.model.UpdateReplyVO;
 
 public interface ReplyMapper {
@@ -34,4 +35,5 @@ public interface ReplyMapper {
 	
 	/* 평균 평점 반영 */
 	public int updateRating(UpdateReplyVO uvo);
+	
 }

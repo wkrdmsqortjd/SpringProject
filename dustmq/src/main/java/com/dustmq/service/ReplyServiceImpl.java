@@ -1,5 +1,7 @@
 package com.dustmq.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +10,7 @@ import com.dustmq.model.Criteria;
 import com.dustmq.model.PageDTO;
 import com.dustmq.model.ReplyPageDTO;
 import com.dustmq.model.ReplyVO;
+import com.dustmq.model.SelectVO;
 import com.dustmq.model.UpdateReplyVO;
 
 @Service

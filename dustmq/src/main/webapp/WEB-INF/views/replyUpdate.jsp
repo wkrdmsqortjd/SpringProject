@@ -190,6 +190,7 @@ $(document).ready(function(){
 				// 부모창의 댓글을 최신화해주는 메서드 호출
 				$(opener.location).attr("href", "javascript:replyListInit();");
 				window.close();
+				
 			}			
 		});	// $.ajax()		
 		
