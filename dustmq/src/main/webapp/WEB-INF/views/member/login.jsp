@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+<!-- font awesome -->
+<script src="https://kit.fontawesome.com/1986c6b16c.js" crossorigin="anonymous"></script>
+<!-- <link rel='stylesheet' href='https://unicons.iconscout.com/release/v2.1.9/css/unicons.css'><link rel="stylesheet" href="./style.css"> -->
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -13,41 +17,65 @@
 </script>
 <link rel="stylesheet" href="/resources/css/member/login.css">
 </head>
+
 <body>
 
-<div class="wrapper">
-	
-		<div class="wrap">
-			<form id="login_form" method="post">
-			<div class="logo_wrap">
-			<span>Book Mall</span>
-		</div>
-		<div class="login_wrap">
-			<div class="id_wrap">
-				<div class="id_input_box">
-					<input class="id_input" name="memberId">
-				</div>
-			</div>
-			<div class="pw_wrap">
-				<div class="pw_input_box">
-					<input class="pw_input" name="memberPw">
-				</div>
-			</div>
-			
-		<c:if test = "${result == 0 }">
-			<div class="login_warn">사용자 ID 또는 비밀번호를 잘못 입력하셨습니다.</div>
-		</c:if>
-			
-			<div class="login_button_wrap">
-					<input type="button" class="login_button" value="로그인">
-				</div>
-			</div>
-		</form>
+<form id="login_form" method="post">
+	<!-- <div class="section"> -->
+		<div class="container">
+			<div class="top_gnb_area">
+			  <a class="home_logo" href="/main">
+				<i class="fa-solid fa-house"></i>
+			  </a>
+					<ul class="list">
+						<c:if test = "${member == null }">	<!-- 비 로그인 -->
+							<li>
+								<a href="/member/login">로그인</a>	
+							</li>
+							<li>
+								<a href="/member/join">회원가입</a>
+							</li>
+						</c:if>
+					</ul>
+		     </div>
+			<div class="row full-height justify-content-center">
+				<div class="col-12 text-center align-self-center py-5">
+					<div class="section pb-5 pt-5 pt-sm-2 text-center">
+						<div class="card-3d-wrap mx-auto">
+							<div class="card-3d-wrapper">
+								<div class="card-front">
+									<div class="center-wrap">
+										<div class="section text-center">
+											<h4 class="mb-4 pb-3">Log In</h4>
+											<div class="form-group">
+												<input type="text" name="memberId" class="form-style" placeholder="Your Id" id="logemail" autocomplete="off">
+												<i class="input-icon uil uil-at"></i>
+											</div>	
+											<div class="form-group mt-2">
+												<input type="password" name="memberPw" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
+												<i class="input-icon uil uil-lock-alt"></i>
+													<c:if test = "${result == 0 }">
+														<div class="login_warn">사용자 ID 또는 비밀번호를 잘못 입력하셨습니다.</div>
+													</c:if>
+											</div>
+											<div class="login_button_wrap">
+												<input type="button" class="login_button" value="로그인">
+											</div>
+                            				<p class="mb-0 mt-4 text-center"><a href="/member/join" class="link">회원가입을 하시겠습니까?</a></p>
+				      					</div>
+			      					</div>
+			      				</div>
+			      				
+			      			</div>
+			      		</div>
+			      	</div>
+		      	</div>
+	      	</div>
+	    </div>
+	<!-- </div> -->
+</form>
 
-	</div>
-
-</div>
-
+<!-- <script  src="resources/js/script.js"></script> -->
 <script>
  
     /* 로그인 버튼 클릭 메서드 */
@@ -63,6 +91,6 @@
  
 </script>
 
-
 </body>
+ 
 </html>

@@ -15,7 +15,9 @@
 </head>
 <body>
 
-<div class="wrapper">
+<%@include file="includes/member/header.jsp" %>
+
+<%-- <div class="wrapper">
 	<div class="wrap">
 		<div class="top_gnb_area">
 			<ul class="list">
@@ -86,7 +88,7 @@
 					</div>
 				</c:if>
 				
-			</div>
+			</div> --%>
 			<div class="clearfix"></div>			
 		</div>
 		
@@ -152,7 +154,9 @@
 												</div>
 												<div class="title">
 													<a href="/goodsDetail/${list.bookId}">	<!-- @PathVariable -->
+														${list.bookName}
 													</a>
+													
 												</div>
 												<div class="author">
 												<!-- String 타입의 publeYear을 Date타입으로 바꾸기 위해 parseDate 사용 -->

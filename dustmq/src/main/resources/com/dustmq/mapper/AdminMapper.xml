@@ -124,20 +124,20 @@
 	<select id="getOrderList" resultType="com.dustmq.model.OrderVO">
 	
 		<![CDATA[
-		select * 
-		from(
-		    select rownum rn, orderId, memberId, orderstate, orderdate
+	select * 
+	from(
+		 select rownum rn, orderId, memberId, orderState, orderDate
+		 from (
+		    select orderId, memberId, orderState, orderDate
 		    from vam_order
-		    where rownum <= #{pageNum} * #{amount} 
+		    order by orderDate desc)
+	     where rownum <= #{pageNum} * #{amount} 
 		]]>    
 		<if test="keyword != null">	<!-- 키워드가 있을 때 -->
 			and memberId like '%'||#{keyword}||'%'
 		</if>
 		<![CDATA[
-		    
-		    order by orderdate desc
-		    )
-		    
+				)
 		where rn > (#{pageNum} -1) * #{amount}
 		]]>
 	

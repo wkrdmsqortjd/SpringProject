@@ -15,7 +15,10 @@
 </head>
 <body>
 
-<div class="wrapper">
+<!-- header -->
+<%@include file="includes/member/header.jsp" %>
+
+<%-- <div class="wrapper">
 	<div class="wrap">
 		<div class="top_gnb_area">
 			<ul class="list">
@@ -84,7 +87,7 @@
 					</div>
 				</c:if>
 				
-			</div>
+			</div> --%>
 			<div class="clearfix"></div>			
 		</div>
 		

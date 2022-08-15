@@ -53,7 +53,7 @@
 		                    			<td><c:out value="${list.orderState}"/></td>
 		                    			<td>
 		                    				<c:if test="${list.orderState == '배송준비' }">
-		                    					<button class="delete_btn" data-orderid="${list.orderId}">주문 취소</button>
+		                    					<button class="delete_btn" data-orderid="${list.orderId}" data-memberId="${list.memberId}">주문 취소</button>
 	                    					</c:if>
 		                    			</td>
 		                    		</tr>
@@ -112,7 +112,7 @@
                     </div>
                     
                     <!-- 페이지 이동할 때 필요정보 form -->
-                    <form id="moveForm" action="/admin/authorManage" method="get">
+                    <form id="moveForm" action="/admin/orderList" method="get">
 						<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 						<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 						<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
@@ -124,7 +124,7 @@
                     		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 							<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 							<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
-							<input type="hidden" name="memberId" value="${member.memberId}">
+							<input type="hidden" name="memberId">
                     </form> 
                 </div>
 			
@@ -156,11 +156,11 @@
 	$(".pageMaker_btn a").on("click", function(e){
 		
 		e.preventDefault();
-		
-		console.log($(this).attr("href"));	
+
+		/* console.log($(this).attr("href"));	 */
 		
 		moveForm.find("input[name='pageNum']").val($(this).attr("href"));	/* 각 눌렀던 href의 속성을 추가 */
-		 
+		
 		moveForm.submit();
 		
 	});
@@ -171,8 +171,11 @@
 		e.preventDefault();
 		
 		let id = $(this).data("orderid");	/* 버튼에 orderId 데이터 값을 id에 저장 */
-
+		let memid = $(this).data("memberid");
+		
 		$("#deleteForm").find("input[name='orderId']").val(id);
+		$("#deleteForm").find("input[name='memberId']").val(memid);
+		
 		$("#deleteForm").submit();
 		
 	});

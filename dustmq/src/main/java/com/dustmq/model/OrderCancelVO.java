@@ -11,6 +11,7 @@ public class OrderCancelVO {
 	private String keyword;		// 검색 키워드
 	private int amount;			// 게시물의 총 개수
 	private int pageNum;		// 현재 페이지 번호
+	
 	public String getMemberId() {
 		return memberId;
 	}

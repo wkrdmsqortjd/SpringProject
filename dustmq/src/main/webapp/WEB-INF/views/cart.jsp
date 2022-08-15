@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Welcome BookMall</title>
+<script src="https://kit.fontawesome.com/1986c6b16c.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/resources/css/cart.css">
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
@@ -15,7 +16,9 @@
 </head>
 <body>
 
-<div class="wrapper">
+<%@include file="includes/member/header2.jsp" %>
+
+<%-- <div class="wrapper">
 	<div class="wrap">
 		<div class="top_gnb_area">
 			<ul class="list">
@@ -32,7 +35,7 @@
 						<li><a href="/admin/main">관리자 페이지</a></li>
 					</c:if>							
 					<li>
-						<a id="gnb_logout_button">로그아웃</a>
+						<a id="/member/logout.do">로그아웃</a>
 					</li>
 					<li>
 						마이룸
@@ -79,11 +82,10 @@
 						<span>회원 : ${member.memberName}</span>
 						<span>충전금액 : <fmt:formatNumber value="${member.money }" pattern="\#,###.##"/></span>
 						<span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span>
-						<a href="/member/logout.do">로그아웃</a>
 					</div>
 				</c:if>
 				
-			</div>
+			</div> --%>
 			<div class="clearfix"></div>			
 		</div>
 		<div class="content_area">
@@ -348,22 +350,25 @@ $(document).ready(function(){
 	/* 배송비 결정 */
 	if(totalPrice >= 30000){	// 총 지불 값이 30000원 이상이면 
 		deliveryPrice = 0;		// 배달비 0
+	
 	} else if(totalPrice == 0){	// 총 지불 값이 0원 이면
 		deliveryPrice = 0;		// 배달비 0
+	
 	} else {					// 총 지불 값이 30000원 이하면
 		deliveryPrice = 3000;	// 배달비 3000원
+	
 	}
 	
 	/* 최종 가격 */
-	finalTotalPrice = totalPrice + deliveryPrice;
+	finalTotalPrice = totalPrice + deliveryPrice;	
 	
 	/* 값 삽입 */
 	$(".totalPrice_span").text(totalPrice.toLocaleString());  // 총 가격	.text() 선택자 하위에 있는 자식들의 문자열만 출력
-	$(".totalCount_span").text(totalCount);		// 총 갯수
-	$(".totalKind_span").text(totalKind);		// 총 종류
+	$(".totalCount_span").text(totalCount);					  // 총 갯수
+	$(".totalKind_span").text(totalKind);					  // 총 종류
 	$(".totalPoint_span").text(totalPoint.toLocaleString());  // 총 마일리지
-	$(".delivery_price").text(deliveryPrice);	// 배송비
-	$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());	// 최종 가격(배송비 포함)
+	$(".delivery_price").text(deliveryPrice);				  // 배송비
+	$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());	// 최종 가격(배송비 포함) 
 
 	}
 	

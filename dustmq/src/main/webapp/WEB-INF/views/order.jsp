@@ -18,7 +18,9 @@
 </head>
 <body>
 
-<div class="wrapper">
+<%@include file="includes/member/header2.jsp" %>
+
+<%-- <div class="wrapper">
 	<div class="wrap">
 		<div class="top_gnb_area">
 			<ul class="list">
@@ -36,7 +38,7 @@
 						<li><a href="/admin/main">관리자 페이지</a></li>
 					</c:if>							
 					<li>
-						<a id="gnb_logout_button">로그아웃</a>
+						<a id="/member/logout.do">로그아웃</a>
 					</li>
 					<li>
 						마이룸
@@ -84,11 +86,10 @@
 						<span>회원 : ${member.memberName}</span>
 						<span>충전금액 : <fmt:formatNumber value="${member.money }" pattern="\#,###.##"/></span>
 						<span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span>
-						<a href="/member/logout.do">로그아웃</a>
 					</div>
 				</c:if>
 			
-			</div>
+			</div> --%>
 			<div class="clearfix"></div>			
 		</div>
 		<div class="content_area">
@@ -508,10 +509,12 @@ function execution_daum_address(){
 		});
 		
 		/* 배송비 결정 */
-		if(totalPrice >= 30000){		// 총 금액이 30000원을 넘으면
+		if(totalPrice >= 30000){		// 총 금액이 30000원을 이상이면
 				deliveryPrice = 0;		// 배달비 0원
+	
 		} else if(totalPrice == 0){		// 총 금액이 0원이면
 				deliveryPrice = 0;		// 배달비 0원
+		
 		} else {						// 그 외의 경우
 				deliveryPrice = 3000;	// 배달비 3000원
 		}
@@ -529,9 +532,9 @@ function execution_daum_address(){
 		$(".goods_kind_div_kind").text(totalKind);							// 총 종류
 		$(".totalPoint_span").text(totalPoint.toLocaleString());			// 총 포인트
 		$(".delivery_price_span").text(deliveryPrice.toLocaleString());		// 배송비
-		$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());	// 최종 가격(총 가격 + 배송비)
 		$(".usePoint_span").text(usePoint.toLocaleString());				// 할인가(사용 포인트)
-	}
+		$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());	// 최종 가격(총 가격 + 배송비)
+	};
 	
 	/* 주문 요청 */
 	$(".order_btn").on("click", function(){

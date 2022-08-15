@@ -6,22 +6,53 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Welcome BookMall</title>
 <link rel="stylesheet" href="resources/css/main.css">
+
+<!-- slick - css -->
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+<!-- font awesome -->
+<script src="https://kit.fontawesome.com/1986c6b16c.js" crossorigin="anonymous"></script>
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
+
+<!-- slick - js -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<style type="text/css">
+
+	.slick-prev{
+		left: 100px;
+		/* z-index: 1; */
+	}
+	
+	.slick-next{
+		right: 100px;
+		/* z-index: 1; */
+	}
+	
+	.slick-prev:before, .slick-next:before{
+		color: gray;
+	}
+
+</style>
 
 </head>
 <body>
 
-<div class="wrapper">
+<%@include file="includes/member/header.jsp" %>
+
+<%-- <div class="wrapper">
 	<div class="wrap">
 		<div class="top_gnb_area">
+		<div class="brand_name">
+			Spring Project
+		</div>
 			<ul class="list">
 				<c:if test = "${member == null }">	<!-- 비 로그인 -->
 					<li>
@@ -51,6 +82,7 @@
 				</li>
 			</ul>
 		</div>
+		
 		<div class="top_area">
 			<!-- 로고 영역 -->
 			<div class="logo_area">
@@ -66,7 +98,9 @@
                					<option value="A"> 작 가 </option>
             				</select>
                				<input type="text" name="keyword">
-                   			<button class='btn search_btn'>검 색</button>                				
+                   			<button class='btn search_btn'>
+								<i class="fa-solid fa-magnifying-glass"></i>
+							</button>                				
                			</div>
                		</form>
                	
@@ -77,7 +111,6 @@
 			<!-- 로그인 하지 않은 상태 -->
 			<c:if test = "${member == null }">
 				<div class="login_button"><a href="/member/login">로그인</a></div>
-				<span><a href="/member/join">회원가입</a></span>
 			</c:if>
 			
 			<!-- 로그인한 상태 -->
@@ -90,13 +123,13 @@
                 </div>
             </c:if>		
 			
-			</div>
+			</div> --%>
 			<div class="clearfix"></div>			
 		</div>
 		<div class="navi_bar_area">
 			<div class="dropdown">
-			    <button class="dropbtn">국내 
-			      <i class="fa fa-caret-down"></i>
+			    <button class="dropbtn">국내  
+				<i class="fa-solid fa-arrow-down"></i>
 			    </button>
 			    <div class="dropdown-content">
 					<c:forEach items="${cate1}" var="cate">
@@ -106,7 +139,7 @@
 			</div>
 			<div class="dropdown">
 			    <button class="dropbtn">국외 
-			      <i class="fa fa-caret-down"></i>
+			      <i class="fa-solid fa-arrow-down"></i>
 			    </button>
 			    <div class="dropdown-content">
 			    	<c:forEach items="${cate2}" var="cate">
@@ -168,24 +201,9 @@
 		
 		</div>
 		
-		<!-- Footer 영역 -->
-        <div class="footer_nav">
-            <div class="footer_nav_container">
-                <ul>
-                    <li>회사소개</li>
-                    <span class="line">|</span>
-                    <li>이용약관</li>
-                    <span class="line">|</span>
-                    <li>고객센터</li>
-                    <span class="line">|</span>
-                    <li>광고문의</li>
-                    <span class="line">|</span>
-                    <li>채용정보</li>
-                    <span class="line">|</span>
-                </ul>
-            </div>
-        </div> <!-- class="footer_nav" -->
-        
+	
+	</div>	<!-- class="wrap" -->
+</div>	<!-- class="wrapper" -->
         <div class="footer">
             <div class="footer_container">
                 
@@ -205,14 +223,12 @@
                 <div class="clearfix"></div>
             </div>
         </div> <!-- class="footer" -->    
-	
-	</div>	<!-- class="wrap" -->
-</div>	<!-- class="wrapper" -->
 
 <script>
 
 $(document).ready(function(){
 	
+	/* 이벤트 베너 */
 	$(".slide_div").slick(
 			{
 				dots: true,
@@ -221,11 +237,28 @@ $(document).ready(function(){
 			}				
 	);	
 	
+	/* 베스트 상품 */
 	$(".ls_div").slick({
 		slidesToShow: 4,
 		slidesToScroll: 4,
-		prevArrow : "<button type='button' class='ls_div_content_prev'>이전</button>",		// 이전 화살표 모양 설정
-		nextArrow : "<button type='button' class='ls_div_content_next'>다음</button>",		// 다음 화살표 모양 설정	
+		prevArrow : "<button type='button' class='ls_div_content_prev'>←</button>",		// 이전 화살표 모양 설정
+		nextArrow : "<button type='button' class='ls_div_content_next'>→</button>",		// 다음 화살표 모양 설정	
+
+		/* 화면의 크기에 따라 달라짐 */
+		responsive: [ // 반응형 웹 구현 옵션
+                    {  
+                        breakpoint: 960, //화면 사이즈 960px 일 때, 3개 출력
+                        settings: {
+                            slidesToShow:3 
+                        } 
+                    },
+                    { 
+                        breakpoint: 768, //화면 사이즈 768px 일 때, 2개 출력
+                        settings: {    
+                            slidesToShow:2 
+                        } 
+                    }
+                ]
 	});		
 	
 	/* 이미지 삽입 */
@@ -246,7 +279,22 @@ $(document).ready(function(){
 		}
 		
 	});			
-});
+	
+	/* 검색 버튼 동작 */
+	$(".search_btn").on("click", function(){
+		
+		let searchKeyword = $(".search_input input[name='keyword']").val();
+		
+		if(searchKeyword == "" || searchKeyword == null) {
+			alert("검색어를 입력하세요");
+			return false;
+		}
+		
+		$(this).submit();
+	});
+	
+});		/* ready() */
+
 
  
     /* gnb_area 로그아웃 버튼 작동 */

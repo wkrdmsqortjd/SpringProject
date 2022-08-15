@@ -15,12 +15,12 @@ ul{
 }
 /* 화면 전체 렙 */
 .wrapper{
-	width: 100%;
+    width: 95%;
+    margin: auto;
 }
 /* content 랩 */
 .wrap{
-	width : 1080px;
-	margin: auto;
+    width : 100%;
 }
 /* 홈페이지 기능 네비 */ 
 .top_gnb_area{

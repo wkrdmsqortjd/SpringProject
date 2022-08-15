@@ -142,9 +142,6 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
     
     게시판은 주로 CRUD( Create, Read, Update, Delete ) 기능으로 이루어짐
     
-    로고 삽입 완료 ( 추후에 로고 수정 예정)
-    footer 완료 ( 후에 따로 footer.jsp를 만들 예정 )	
-    
     - 상품 등록, 상품 관리, 작가 등록, 작가 관리 페이지 작성 및 맵핑 메서드 작성
     
     순서 

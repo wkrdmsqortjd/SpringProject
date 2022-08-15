@@ -37,7 +37,7 @@ public class MemberController {
     private BCryptPasswordEncoder pwEncoder;	// 스프링 시큐리티
 	
 	// 회원가입 페이지 이동
-	@RequestMapping(value="join", method=RequestMethod.GET)
+	@RequestMapping(value="/join", method=RequestMethod.GET)
 	public void loginGET() {
 		
 		logger.info("회원가입 페이지 진입");
@@ -151,7 +151,7 @@ public class MemberController {
 		MemberVO lvo = memberservice.memberLogin(member);
 		
 		if(lvo != null) {		// 일치하는 아이디 존재 o
-
+			
 			rawPw = member.getMemberPw();	// 사용자가 제출한 비밀번호
 			encodePw = lvo.getMemberPw();	// DB에 저장한 인코딩된 비밀번호
 			
@@ -159,6 +159,11 @@ public class MemberController {
 				
 				lvo.setMemberPw("");					// 인코딩된 비밀번호 정보를 지움, 인코딩이 되었더라도 굳이 노출할 필요 x
 				session.setAttribute("member", lvo);	// session에 사용자의 정보 저장
+			
+				if(lvo.getMemberId().equals("admin")) {	// 아이디가 admin일 떄 
+					return "redirect:/admin/main";		// 관리자 메인페이지로 접속
+				}
+				
 				return "redirect:/main";				// 로그인 후 메인페이지 이동
 				
 			} else {			// 일치하는 아이디가 존재 x
@@ -180,7 +185,7 @@ public class MemberController {
 		}
 	}
 	
-	// 메인페이지 로그아웃
+	// 메인페이지 로그아웃	(cart , order)
 	@RequestMapping(value="logout.do", method=RequestMethod.GET)
 	public String logoutMainGET(HttpServletRequest request) throws Exception {
 		
@@ -194,7 +199,7 @@ public class MemberController {
 		
 	}
 	
-	// 비동기식 로그아웃 메서드
+	// 비동기식 로그아웃 메서드	(main , search , goodsDetail)
 	@RequestMapping(value="logout.do", method=RequestMethod.POST)
 	@ResponseBody
 	public void logoutPOST(HttpServletRequest request) throws Exception {

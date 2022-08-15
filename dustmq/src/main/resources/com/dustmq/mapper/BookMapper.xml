@@ -199,14 +199,23 @@
 	<!-- 평점 순 상품정보 -->
 	<select id="likeSelect" resultType="com.dustmq.model.SelectVO">
   
-	 	select * from
+	 	<!-- select * from
 		(select rownum as rn, bookId, bookName, ratingAvg, (select cateName from vam_bcate where vam_book.cateCode = vam_bcate.cateCode) as cateName
-		from vam_book
+		from vam_book 
 		order by ratingAvg desc nulls last)	
 		<![CDATA[									
 		where rn < 9
+		]]>	 -->
+		
+		<!-- 1. 상품테이블에서, 2. 해당 컬럼의 데이터를 조회 3. 평점순으로 정리 4. 정렬한 데이터들을 rownum값으로 8번까지 5. 모든 데이터 조회 -->
+		select * from	<!-- 5 -->
+		(select bookId, bookName, ratingAvg, (select cateName from vam_bcate where vam_book.cateCode = vam_bcate.cateCode) as cateName	<!-- 2. 서브쿼리 -->
+		from vam_book	<!-- 1 -->
+		order by ratingAvg desc nulls last) <!-- 3 -->
+		<![CDATA[									
+		where rownum < 9	
 		]]>	
-  
+  		<!-- 4 -->
 	</select>
 	
 	<!-- 평균값을 위한 book테이블 데이터 조회 구하기 -->
