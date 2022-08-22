@@ -8,7 +8,7 @@
 	<!-- 이미지 정보 반환 -->
 	<select id="getAttachList" resultType="com.dustmq.model.AttachImageVO">
 	
-		select * from vam_image where bookId = #{bookId}
+		select * from bs_image where bookId = #{bookId}
 	
 	</select>
 	

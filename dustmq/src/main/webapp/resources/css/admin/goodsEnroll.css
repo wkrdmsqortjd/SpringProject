@@ -158,12 +158,32 @@ ul{
 
 /* 캘린더 css 설정 */
 .ui-datepicker-trigger {						
-    margin-left: 25px;
-    height: 38px;
-    font-weight: 600;
-    background-color: #dfe8f5;
-    font-size: 15px;
-    cursor:pointer;
+    border-radius: 4px;
+  height: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  -webkit-transition : all 200ms linear;
+  transition: all 200ms linear;
+  padding: 3%;
+  margin-left: 6px;
+  letter-spacing: 1px;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -ms-flex-pack: center;
+  text-align: center;
+  border: none;
+  color: #102770;
+  background-color: #6AAFE6;
 }
 
 input[name='publeYear'] {
@@ -173,12 +193,63 @@ input[name='publeYear'] {
 
 /* 작가 선택 css 설정 */
 .authorId_btn {						
-    margin-left: 20px;
-    height: 38px;
-    font-weight: 600;
-    background-color: #dfe8f5;
-    font-size: 15px;
-    cursor:pointer;
+    border-radius: 4px;
+  height: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  -webkit-transition : all 200ms linear;
+  transition: all 200ms linear;
+  padding: 3%;
+  letter-spacing: 1px;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -ms-flex-pack: center;
+  text-align: center;
+  border: none;
+  color: #102770;
+  background-color: #6AAFE6;
+}
+/* 작가선택 버튼 */
+.authorId_btn:active,
+.authorId_btn:focus{  
+  background-color: #102770;
+  color: #6AAFE6;
+}
+.authorId_btn:hover{  
+  background-color: #102770;
+  color: #6AAFE6;
+}
+
+/* 버튼들 */
+.btn:active,
+.btn:focus{  
+  background-color: #102770;
+  color: #6AAFE6;
+}
+.btn:hover{  
+  background-color: #102770;
+  color: #6AAFE6;
+}
+
+/* 날짜선택 버튼 */
+.ui-datepicker-trigger:active,
+.ui-datepicker-trigger:focus{  
+  background-color: #102770;
+  color: #6AAFE6;
+}
+.ui-datepicker-trigger:hover{  
+  background-color: #102770;
+  color: #6AAFE6;
 }
 #authorName_input {
     width: 80%;
@@ -222,18 +293,68 @@ input[name='publeYear'] {
 	margin: 80px 0;
 }
 .btn{
-    min-width: 180px;
-    padding: 4px 30px;
-    font-size: 25px;
-    font-weight: 600;
-    line-height: 40px;
+     border-radius: 4px;
+  height: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  -webkit-transition : all 200ms linear;
+  transition: all 200ms linear;
+  padding: 3%;
+  letter-spacing: 1px;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -ms-flex-pack: center;
+  text-align: center;
+  border: none;
+  color: #102770;
+  background-color: #6AAFE6;
 }
 .enroll_btn{
-	background-color: #dbdde2;
-	margin-left:15px;
+   border-radius: 4px;
+  height: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  -webkit-transition : all 200ms linear;
+  transition: all 200ms linear;
+  padding: 3%;
+  letter-spacing: 1px;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -ms-flex-pack: center;
+  text-align: center;
+  border: none;
+  color: #102770;
+  background-color: #6AAFE6;
 }
-#enrollBtn:hover {
-    background-color: #c9cbd0;
+
+.enrollBtn:active,
+.enrollBtn:focus{  
+  background-color: #102770;
+  color: #6AAFE6;
+}
+.enrollBtn:hover{  
+  background-color: #102770;
+  color: #6AAFE6;
 }
 
 /* footer navai 영역 */

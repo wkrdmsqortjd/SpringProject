@@ -7,7 +7,7 @@
   <!-- 카트 추가 -->
   <insert id="addCart">
   
-  			insert into vam_cart(cartId, memberId, bookId, bookCount)
+  			insert into bs_cart(cartId, memberId, bookId, bookCount)
   			values (cartId_seq.NEXTVAL, #{memberId}, #{bookId}, #{bookCount})
   
   </insert>
@@ -15,14 +15,14 @@
   <!-- 카트 삭제 -->
   <delete id="deleteCart">
   
-  			delete from vam_cart where cartId = #{cartId}
+  			delete from bs_cart where cartId = #{cartId}
   
   </delete>
   	
   <!-- 카트 수정 (수량) -->	
   <update id="modifyCart">
   
-  			update vam_cart set bookCount = #{bookCount} where cartId = #{cartId}
+  			update bs_cart set bookCount = #{bookCount} where cartId = #{cartId}
   
   </update>	
   
@@ -30,7 +30,7 @@
   <select id="getCart" resultType="com.dustmq.model.CartVO">
   
   			select a.cartId, a.memberId, a.bookId, a.bookCount, b.bookName, b.bookPrice, b.bookDiscount
-  			from vam_cart a left outer join vam_book b on a.bookId = b.bookId
+  			from bs_cart a left outer join bs_book b on a.bookId = b.bookId
   			where memberId = #{memberId}
   
   </select>
@@ -38,7 +38,7 @@
   <!-- 카트 확인 -->
   <select id="checkCart" resultType="com.dustmq.model.CartVO">
   
-  			select * from vam_cart
+  			select * from bs_cart
   			where memberId = #{memberId} and bookId = #{bookId}
   
   </select>
@@ -46,7 +46,7 @@
   <!-- 주문 완료 후 장바구니 비우기 -->
   <delete id="deleteOrderCart">
   
-  			delete from vam_cart where memberId = #{memberId} and bookId = #{bookId}
+  			delete from bs_cart where memberId = #{memberId} and bookId = #{bookId}
   
   </delete>
 	

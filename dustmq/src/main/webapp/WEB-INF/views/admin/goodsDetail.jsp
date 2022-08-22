@@ -163,7 +163,6 @@
                    			</div>
                    		</div>
                    		
-                   		
                    			 <div class="btn_section">
 		             			<button id="cancelBtn" class="btn">상품 목록</button>
 		                    	<button id="modifyBtn" class="btn enroll_btn">수정 </button>

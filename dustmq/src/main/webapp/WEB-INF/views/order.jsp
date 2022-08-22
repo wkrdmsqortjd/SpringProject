@@ -20,76 +20,6 @@
 
 <%@include file="includes/member/header2.jsp" %>
 
-<%-- <div class="wrapper">
-	<div class="wrap">
-		<div class="top_gnb_area">
-			<ul class="list">
-				<c:if test = "${member == null}">	<!-- 로그인 x -->	
-					<li >
-						<a href="/member/login">로그인</a>
-					</li>
-					<li>
-						<a href="/member/join">회원가입</a>
-					</li>
-				</c:if>
-				
-				<c:if test="${member != null }">	<!-- 로그인 o -->		
-					<c:if test="${member.adminCk == 1 }">	<!-- 관리자 계정 -->
-						<li><a href="/admin/main">관리자 페이지</a></li>
-					</c:if>							
-					<li>
-						<a id="/member/logout.do">로그아웃</a>
-					</li>
-					<li>
-						마이룸
-					</li>
-					<li>
-						<a href="/cart/${member.memberId}">장바구니</a>
-					</li>
-				</c:if>				
-				<li>
-					고객센터
-				</li>			
-			</ul>			
-		</div>
-		<div class="top_area">
-			<!-- 로고영역 -->
-			<div class="logo_area">
-				<a href="/main"><img src="/resources/img/guhaebang_logo.png"></a>
-			</div>
-			<div class="search_area">
-                	<div class="search_wrap">
-                		<form id="searchForm" action="/search" method="get">
-                			<div class="search_input">
-                				<select name="type">
-                					<option value="T">책 제목</option>
-                					<option value="A">작가</option>
-                				</select>
-                				<input type="text" name="keyword" value="<c:out value="${pageMaker.cri.keyword}"/>">
-                    			<button class='btn search_btn'>검 색</button>                				
-                			</div>
-                		</form>
-                	</div>
-			</div>
-			
-			<div class="login_area">
-			
-				<!-- 로그인 하지 않은 상태 -->
-				<c:if test = "${member == null }">
-					<div class="login_button"><a href="/member/login">로그인</a></div>
-					<span><a href="/member/join">회원가입</a></span>				
-				</c:if>				
-				
-				<!-- 로그인한 상태 -->
-				<c:if test="${ member != null }">
-					<div class="login_success_area">
-						<span>회원 : ${member.memberName}</span>
-						<span>충전금액 : <fmt:formatNumber value="${member.money }" pattern="\#,###.##"/></span>
-						<span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span>
-					</div>
-				</c:if>
-			
-			</div> --%>
 			<div class="clearfix"></div>			
 		</div>
 		<div class="content_area">
@@ -324,6 +254,10 @@
 /* '주문 페이지'에 이동했을 때 '주문 종합 정보'가 보여져야해 ready() 사용 */
 $(document).ready(function(){
 	
+	/* 브랜드 로고 이미지 삽입 - 자꾸 text/html로 응답이 옴 */
+	const lobj = $(".logo_area");
+	lobj.find("img").attr('src', '/resources/img/BookShop.png');
+	
 	/* 주문 종합 정보 최신화 */
 	setTotalInfo();
 	
@@ -476,10 +410,11 @@ function execution_daum_address(){
 			//글 변경
 			$(".order_point_input_btn_N").css("display", "none");
 			$(".order_point_input_btn_Y").css("display", "inline-block");		
-		}		
+		}
 		
 		/* 주문 조합 정보란 최신화 */
 		setTotalInfo();
+		
 	});
 	
 	/* 총 주문 정보 세팅(배송비, 총 가격, 포인트, 물품 수량, 종류) */
@@ -512,19 +447,19 @@ function execution_daum_address(){
 		if(totalPrice >= 30000){		// 총 금액이 30000원을 이상이면
 				deliveryPrice = 0;		// 배달비 0원
 	
-		} else if(totalPrice == 0){		// 총 금액이 0원이면
+		} else if (totalPrice == 0){		// 총 금액이 0원이면
 				deliveryPrice = 0;		// 배달비 0원
 		
 		} else {						// 그 외의 경우
 				deliveryPrice = 3000;	// 배달비 3000원
 		}
 		
-		finalTotalPrice = totalPrice + deliveryPrice;
+		finalTotalPrice = totalPrice + deliveryPrice;	
 		
 		/* 사용 포인트 */
 		usePoint = $(".order_point_input").val();
 		
-		finalTotalPrice = totalPrice - usePoint;	// 최종 결제액 = 총 금액 - 사용 포인트액
+		finalTotalPrice = totalPrice - usePoint;	
 		
 		/* 값 삽입 */
 		$(".totalPrice_span").text(totalPrice.toLocaleString());			// 총 가격
@@ -533,8 +468,8 @@ function execution_daum_address(){
 		$(".totalPoint_span").text(totalPoint.toLocaleString());			// 총 포인트
 		$(".delivery_price_span").text(deliveryPrice.toLocaleString());		// 배송비
 		$(".usePoint_span").text(usePoint.toLocaleString());				// 할인가(사용 포인트)
-		$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());	// 최종 가격(총 가격 + 배송비)
-	};
+		$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());	
+	}
 	
 	/* 주문 요청 */
 	$(".order_btn").on("click", function(){

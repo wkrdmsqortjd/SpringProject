@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,6 @@
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
 <!-- font awesome -->
 <script src="https://kit.fontawesome.com/1986c6b16c.js" crossorigin="anonymous"></script>
-<!-- <link rel='stylesheet' href='https://unicons.iconscout.com/release/v2.1.9/css/unicons.css'><link rel="stylesheet" href="./style.css"> -->
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -60,6 +60,8 @@
 											</div>
 											<div class="login_button_wrap">
 												<input type="button" class="login_button" value="로그인">
+												<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?<spring:eval expression="@config['KAKAO_API']"/>
+												&redirect_uri=http://localhost:2994/member/kakaoLogin&response_type=code">카카오 로그인</a>
 											</div>
                             				<p class="mb-0 mt-4 text-center"><a href="/member/join" class="link">회원가입을 하시겠습니까?</a></p>
 				      					</div>

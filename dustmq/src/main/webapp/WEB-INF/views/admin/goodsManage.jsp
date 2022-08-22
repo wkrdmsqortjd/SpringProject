@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="../resources/css/admin/goodsManage.css">
+ <script src="https://kit.fontawesome.com/1986c6b16c.js" crossorigin="anonymous"></script>
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -67,7 +68,7 @@
                     			<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum }"></c:out>'>
                     			<input type="hidden" name="amount" value='${pageMaker.cri.amount}'>
                     			<input type="hidden" name="type" value="G">
-                    			<button class='btn search_btn'>검 색</button>                				
+                    			<button class='btn search_btn'><i class="fa-solid fa-magnifying-glass"></i></button>                				
                 			</div>
                 		</form>
                 	</div>

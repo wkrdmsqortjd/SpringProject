@@ -181,10 +181,6 @@
 								<div class="form_section_content">
 									<input type="file" id ="fileItem" name='uploadFile' style="height: 30px;">	<!-- 파일 여러개 선택하고 싶으면 multiple속성 추가 -->
 										<div id="uploadResult">
-											<!-- <div id="result_card">
-												<div class="imgDeleteBtn">x</div>
-												<img src="/display?fileName=P1235.png">
-											</div> -->
 										</div>
 								</div>
 							</div>                    		
@@ -216,16 +212,16 @@
 		e.preventDefault();
 		
 		/* 상품 등록 체크 변수 */
-		let bookNameCk = false;		
-		let authorIdCk = false;		
-		let publeYearCk = false;	
-		let publisherCk = false;	
-		let cateCodeCk = false;		
+		let bookNameCk = false;
+		let authorIdCk = false;
+		let publeYearCk = false;
+		let publisherCk = false;
+		let cateCodeCk = false;
 		let priceCk = false;
 		let stockCk = false;
 		let discountCk = false;
 		let introCk = false;
-		let contentsCk = false;
+		let contentsCk = false;	
 		
 		/* 체크 대상 변수 */
 		let bookName = $("input[name='bookName']").val();
@@ -242,10 +238,10 @@
 		/* 유효성 검사(공란 체크) */
 		if(bookName){
 			$(".bookName_warn").css('display', 'none');
-			bookName = true;
+			bookNameCk = true;
 		} else {
 			$(".bookName_warn").css('display', 'block');
-			bookName = false;
+			bookNameCk = false;
 		}
 		
 		if(authorId){
@@ -322,14 +318,12 @@
 		}		
 		
 		/* 최종 체크 */
-		/* if(bookNameCk && authorIdCk && publeYearCk && publisherCk && cateCodeCk
-		   && priceCk && stockCk && discountCk && introCk && contentsCk ){
-
-				console.log("성공");
-				enrollForm.submit();	// 모두 true면 전송
+		if(bookNameCk && authorIdCk && publeYearCk && publisherCk && cateCodeCk && priceCk && stockCk && discountCk && introCk && contentsCk ){
+			//alert('통과');
+			enrollForm.submit();
 		} else {
-				return false;			// 한 항목이라도 false면 '상품 등록' 메서드가 종료
-		} */
+			return false;
+		}
 		
 		enrollForm.submit();
 		

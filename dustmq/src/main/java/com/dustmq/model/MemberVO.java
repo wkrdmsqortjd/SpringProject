@@ -27,16 +27,49 @@ public class MemberVO {
 	// 관리자 구분(0:일반사용자, 1:관리자)
 	private int adminCk;
 	
-	//등록일자
+	// 등록일자
 	private int regDate;
 	
-	//회원 돈
+	// 회원 돈
 	private int money;
 	
-	//회원 포인트
+	// 회원 포인트
 	private int point;
+	
+	// 카카오 로그인을 위한 변경
+	private int k_number;
+	
+	private String k_name;
+	
+	private String k_email;
+	
 
 	//getter & setter
+	
+	public int getK_number() {
+		return k_number;
+	}
+
+	public void setK_number(int k_number) {
+		this.k_number = k_number;
+	}
+
+	public String getK_name() {
+		return k_name;
+	}
+
+	public void setK_name(String k_name) {
+		this.k_name = k_name;
+	}
+
+	public String getK_email() {
+		return k_email;
+	}
+
+	public void setK_email(String k_email) {
+		this.k_email = k_email;
+	}
+	
 	public String getMemberId() {
 		return memberId;
 	}

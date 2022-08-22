@@ -154,7 +154,7 @@
                     		<input type="hidden" name='bookId' value="${goodsInfo.bookId}">	<!-- 수정을 하는 쿼리에서는 bookId가 필요해 추가 -->
                    		</form>
                    			<div class="btn_section">
-                   				<button id="cancelBtn" class="btn">취 소</button>
+                   				<button id="cancelBtn" class="btn cancel_btn">취 소</button>
 	                    		<button id="modifyBtn" class="btn modify_btn">수 정</button>
 	                    		<button id="deleteBtn" class="btn delete_btn">삭 제</button>
 	                    	</div> 

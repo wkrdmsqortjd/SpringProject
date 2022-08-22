@@ -1,30 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Welcome BookMall</title>
-<link rel="stylesheet" href="resources/css/main.css">
-
-<!-- slick - css -->
+<title>Welcome GUHAEBANG</title>
+<link rel ="stylesheet" href = "resources/css/main.css">
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
-
-<!-- font awesome -->
-<script src="https://kit.fontawesome.com/1986c6b16c.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
-
-<!-- slick - js -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
-<style type="text/css">
+ <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script> 
+ 
+ <style type="text/css">
 
 	.slick-prev{
 		left: 100px;
@@ -39,13 +32,13 @@
 	}
 
 </style>
-
+ 
 </head>
 <body>
 
-<%@include file="includes/member/header.jsp" %>
+<%@include file="includes/member/header_kakao.jsp" %>
 
-			<div class="clearfix"></div>			
+			<div class = "clearfix"></div>
 		</div>
 		<div class="navi_bar_area">
 			<div class="dropdown">
@@ -126,9 +119,7 @@
 	</div>	<!-- class="wrap" -->
 </div>	<!-- class="wrapper" -->
        <%@include file="includes/member/footer.jsp" %>
-
 <script>
-
 $(document).ready(function(){
 	
 	/* 이벤트 베너 */
@@ -141,14 +132,14 @@ $(document).ready(function(){
 	);	
 	
 	/* 베너 슬릭 */
-/* 	$(".slick_banner").slick(
+	$(".slick_banner").slick(
 		{
 			dots : false,
 			autoplay : true,
 			autoplaySpeed : 3000,
 			arrows : false
 		}		
-	); */
+	);
 	
 	/* 베스트 상품 */
 	$(".ls_div").slick({
@@ -224,6 +215,6 @@ $(document).ready(function(){
     });
     
 </script>
-
+ 
 </body>
 </html>

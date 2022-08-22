@@ -15,9 +15,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dustmq.model.KakaoDTO;
 import com.dustmq.model.MemberVO;
 import com.dustmq.service.MemberService;
 
@@ -58,6 +60,8 @@ public class MemberController {
 		
 		/* 회원가입 쿼리 실행 */
 		memberservice.memberJoin(member);
+		
+		System.out.println(member);
 		
 		return "redirect:/main";	// 다시 메인페이지로 이동
 	}
@@ -150,6 +154,8 @@ public class MemberController {
 		// lvo에 로그인한 member의 정보를 저장 ( 비밀번호는 인코딩되어있음 )
 		MemberVO lvo = memberservice.memberLogin(member);
 		
+		System.out.println(lvo);
+		
 		if(lvo != null) {		// 일치하는 아이디 존재 o
 			
 			rawPw = member.getMemberPw();	// 사용자가 제출한 비밀번호
@@ -160,7 +166,7 @@ public class MemberController {
 				lvo.setMemberPw("");					// 인코딩된 비밀번호 정보를 지움, 인코딩이 되었더라도 굳이 노출할 필요 x
 				session.setAttribute("member", lvo);	// session에 사용자의 정보 저장
 			
-				if(lvo.getMemberId().equals("admin")) {	// 아이디가 admin일 떄 
+				if(lvo.getMemberId().contains("admin")) {	// 아이디가 admin일 떄 
 					return "redirect:/admin/main";		// 관리자 메인페이지로 접속
 				}
 				
@@ -212,4 +218,32 @@ public class MemberController {
 		
 	}
 	
+	/* 카카오 로그인 */
+    @RequestMapping(value="/kakaoLogin", method=RequestMethod.GET)
+    public String kakaoLogin(@RequestParam(value ="code" , required = false) String code,HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+    	
+    	System.out.println("#########" + code);
+		/*
+		 * 리턴값의 testPage는 아무 페이지로 대체해도 괜찮습니다.
+		 * 없는 페이지를 넣어도 무방합니다.
+		 * 404가 떠도 제일 중요한건 #########인증코드 가 잘 출력이 되는지가 중요하므로 너무 신경 안쓰셔도 됩니다.
+		 */
+		
+		//위에서 만든 코드 아래에 코드 추가
+		String access_Token = memberservice.getAccessToken(code);
+		KakaoDTO userInfo = memberservice.getUserInfo(access_Token);
+		System.out.println("###access_Token#### : " + access_Token);
+		System.out.println("###nickname#### : " + userInfo.getK_name());
+		System.out.println("###email#### : " + userInfo.getK_email());
+		
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("kakaoN", userInfo.getK_name());
+		session.setAttribute("kakaoE", userInfo.getK_email());
+		// 위 2개의 코드는 닉네임과 이메일을 session객체에 담는 코드
+		// jsp에서 ${sessionScope.kakaoN} 이런 형식으로 사용할 수 있다.
+	    
+		return "redirect:/kakaoMain";
+    	
+    }
 }

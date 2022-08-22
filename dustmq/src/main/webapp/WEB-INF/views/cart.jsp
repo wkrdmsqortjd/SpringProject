@@ -18,74 +18,6 @@
 
 <%@include file="includes/member/header2.jsp" %>
 
-<%-- <div class="wrapper">
-	<div class="wrap">
-		<div class="top_gnb_area">
-			<ul class="list">
-				<c:if test = "${member == null}">	<!-- 로그인 x -->	
-					<li >
-						<a href="/member/login">로그인</a>
-					</li>
-					<li>
-						<a href="/member/join">회원가입</a>
-					</li>
-				</c:if>
-				<c:if test="${member != null }">	<!-- 로그인 o -->		
-					<c:if test="${member.adminCk == 1 }">	<!-- 관리자 계정 -->
-						<li><a href="/admin/main">관리자 페이지</a></li>
-					</c:if>							
-					<li>
-						<a id="/member/logout.do">로그아웃</a>
-					</li>
-					<li>
-						마이룸
-					</li>
-					<li>
-						<a href="/cart/${member.memberId}">장바구니</a>
-					</li>
-				</c:if>				
-				<li>
-					고객센터
-				</li>			
-			</ul>			
-		</div>
-		<div class="top_area">
-			<!-- 로고영역 -->
-			<div class="logo_area">
-				<a href="/main"><img src="/resources/img/guhaebang_logo.png"></a>
-			</div>
-			<div class="search_area">
-                	<div class="search_wrap">
-                		<form id="searchForm" action="/search" method="get">
-                			<div class="search_input">
-                				<select name="type">
-                					<option value="T">책 제목</option>
-                					<option value="A">작가</option>
-                				</select>
-                				<input type="text" name="keyword" value="<c:out value="${pageMaker.cri.keyword}"/>">
-                    			<button class='btn search_btn'>검 색</button>                				
-                			</div>
-                		</form>
-                	</div>
-			</div>
-			<div class="login_area">
-			
-				<!-- 로그인 하지 않은 상태 -->
-				<c:if test = "${member == null }">
-					<div class="login_button"><a href="/member/login">로그인</a></div>
-					<span><a href="/member/join">회원가입</a></span>				
-				</c:if>				
-				
-				<!-- 로그인한 상태 -->
-				<c:if test="${ member != null }">
-					<div class="login_success_area">
-						<span>회원 : ${member.memberName}</span>
-						<span>충전금액 : <fmt:formatNumber value="${member.money }" pattern="\#,###.##"/></span>
-						<span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span>
-					</div>
-				</c:if>
-				
-			</div> --%>
 			<div class="clearfix"></div>			
 		</div>
 		<div class="content_area">
@@ -266,6 +198,10 @@
 <script>
 
 $(document).ready(function(){
+	
+	/* 브랜드 로고 이미지 삽입 - 자꾸 text/html로 응답이 옴 */
+	const lobj = $(".logo_area");
+	lobj.find("img").attr('src', '/resources/img/BookShop.png');
 	
 	/* 종합 정보 섹션 정보 삽입 */
 	setTotalInfo();

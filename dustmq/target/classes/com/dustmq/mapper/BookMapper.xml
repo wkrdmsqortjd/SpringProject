@@ -53,10 +53,10 @@
 	
 		<![CDATA[
 			select * from(
-				select /*+INDEX_DECS(vam_book SYS_C008313)*/ rownum as rn, bookId, bookName, ratingAvg, 
-					(select authorName from vam_author where vam_book.authorId = vam_author.authorId) authorName, authorId,
-		            (select cateName from vam_bcate where vam_book.cateCode = vam_bcate.cateCode) cateName,cateCode, publisher, publeYear, bookPrice, bookDiscount 
-				from vam_book
+				select /*+INDEX_DECS(bs_book SYS_C008313)*/ rownum as rn, bookId, bookName, ratingAvg, 
+					(select authorName from bs_author where bs_book.authorId = bs_author.authorId) authorName, authorId,
+		            (select cateName from bs_bcate where bs_book.cateCode = bs_bcate.cateCode) cateName,cateCode, publisher, publeYear, bookPrice, bookDiscount 
+				from bs_book
 				where
 		]]>
 		
@@ -74,7 +74,7 @@
 	<!-- 상품 총 개수 -->
 	<select id="goodsGetTotal" resultType="int">
 
-		select count(*) from vam_book
+		select count(*) from bs_book
 		where 
 		<include refid="criteria"></include>
 		bookId > 0
@@ -84,7 +84,7 @@
 	<!-- 작가 id 리스트 요청 -->
 	<select id="getAuthorIdList" resultType="String">
 	
-		select authorid from vam_author where authorname like '%' || #{keyword} || '%'
+		select authorid from bs_author where authorname like '%' || #{keyword} || '%'
 	
 	</select>
 	
@@ -92,7 +92,7 @@
 	<select id="getCateCode1" resultType="com.dustmq.model.CateVO">
 	
 		<![CDATA[
-				select * from vam_bcate where cateCode > 100000 and cateCode < 200000
+				select * from bs_bcate where cateCode > 100000 and cateCode < 200000
 		]]>
 
 	</select>
@@ -101,7 +101,7 @@
   	<select id="getCateCode2" resultType="com.dustmq.model.CateVO">
 	
 		<![CDATA[
-				select * from vam_bcate where cateCode > 200000 and cateCode < 300000
+				select * from bs_bcate where cateCode > 200000 and cateCode < 300000
 		]]>
 	
 	</select>
@@ -110,7 +110,7 @@
   	<select id="getCateList" resultType="String">
   	
   		<!-- DISTINCT는 select 조회시 중복 컬럼을 제거해주고, 중복되지 않은 컬럼만 출력 -->
-  		select DISTINCT cateCode from vam_book
+  		select DISTINCT cateCode from bs_book
   		where
   		<foreach item="type" collection="typeArr">
 				<choose>
@@ -119,14 +119,14 @@
 							<foreach collection="authorArr" item="authorId">
 								<trim prefix="or">
 										authorId = #{authorId}
-										<!-- select distinct cateCode from vam_book where authorId = #{authorId} OR orauthorId = #{authorId} ... -->
+										<!-- select distinct cateCode from bs_book where authorId = #{authorId} OR orauthorId = #{authorId} ... -->
 								</trim>
 							</foreach>
 						</trim>
 					</when>
 					<when test="type == 'T'.toString()">	<!-- 책 제목 검색 -->
 							bookName like '%' || #{keyword} || '%'
-						<!-- select distinct cateCode from vam_book where select distinct cateCode from vam_book where bookName like '%' || #{keyword} || '%' -->
+						<!-- select distinct cateCode from bs_book where select distinct cateCode from bs_book where bookName like '%' || #{keyword} || '%' -->
 					</when>
 				</choose>
   		</foreach>  	
@@ -137,7 +137,7 @@
 	
 		<!-- count(*) 뒤에 별칭을 적은 이유는 MyBatis의 자바 빈 규약에 따라 지정한 반환 타입에 데이터를 세팅하기 때문 -->
 		select DISTINCT count(*) cateCount, a.cateCode, b.cateName
-		from vam_book a left join vam_bcate b on a.cateCode = b.cateCode 
+		from bs_book a left join bs_bcate b on a.cateCode = b.cateCode 
 		where 
 
 		<foreach item="type" collection="typeArr">		
@@ -179,11 +179,11 @@
 	<!-- 상품 정보 -->
 	<select id="getGoodsInfo" resultType="com.dustmq.model.BookVO">
 	
-		<!-- cateName은 vam_author 와 vam_bcate에 있어 JOIN문 사용 -->
+		<!-- cateName은 bs_author 와 bs_bcate에 있어 JOIN문 사용 -->
 		select a.BOOKID, a.BOOKNAME, a.AUTHORID, b.AUTHORNAME, a.PUBLEYEAR, a.PUBLISHER, a.CATECODE, c.CATENAME, a.BOOKPRICE, a.BOOKSTOCK, a.BOOKDISCOUNT, a.BOOKINTRO, a.BOOKCONTENTS
-		from vam_book a 
-		left outer join vam_author b on a.authorId = b.authorId
-		left outer join vam_bcate c on a.catecode = c.catecode
+		from bs_book a 
+		left outer join bs_author b on a.authorId = b.authorId
+		left outer join bs_bcate c on a.catecode = c.catecode
 		where bookId = #{bookId}
 	
 	</select>
@@ -191,7 +191,7 @@
 	<!-- 상품 id 이름 -->
 	<select id="getBookIdName" resultType="com.dustmq.model.BookVO">
 	
-		select bookId, bookName from vam_book
+		select bookId, bookName from bs_book
 		where bookId = #{bookId}
 	
 	</select>
@@ -200,8 +200,8 @@
 	<select id="likeSelect" resultType="com.dustmq.model.SelectVO">
   
 	 	<!-- select * from
-		(select rownum as rn, bookId, bookName, ratingAvg, (select cateName from vam_bcate where vam_book.cateCode = vam_bcate.cateCode) as cateName
-		from vam_book 
+		(select rownum as rn, bookId, bookName, ratingAvg, (select cateName from bs_bcate where bs_book.cateCode = bs_bcate.cateCode) as cateName
+		from bs_book 
 		order by ratingAvg desc nulls last)	
 		<![CDATA[									
 		where rn < 9
@@ -209,8 +209,8 @@
 		
 		<!-- 1. 상품테이블에서, 2. 해당 컬럼의 데이터를 조회 3. 평점순으로 정리 4. 정렬한 데이터들을 rownum값으로 8번까지 5. 모든 데이터 조회 -->
 		select * from	<!-- 5 -->
-		(select bookId, bookName, ratingAvg, (select cateName from vam_bcate where vam_book.cateCode = vam_bcate.cateCode) as cateName	<!-- 2. 서브쿼리 -->
-		from vam_book	<!-- 1 -->
+		(select bookId, bookName, ratingAvg, (select cateName from bs_bcate where bs_book.cateCode = bs_bcate.cateCode) as cateName	<!-- 2. 서브쿼리 -->
+		from bs_book	<!-- 1 -->
 		order by ratingAvg desc nulls last) <!-- 3 -->
 		<![CDATA[									
 		where rownum < 9	
@@ -219,7 +219,5 @@
 	</select>
 	
 	<!-- 평균값을 위한 book테이블 데이터 조회 구하기 -->
-	
-	
 	
   </mapper>

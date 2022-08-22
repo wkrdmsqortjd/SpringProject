@@ -11,10 +11,10 @@
 		
 		<!-- 시퀀스에 대한 키를 설정  -->
 		<!-- <selectKey keyProperty="id" resultType="int" order="BEFORE">
-			select authorId_seq.nextval from vam_author
+			select authorId_seq.nextval from bs_author
 		</selectKey> -->
 		
-		insert into vam_author (authorId, authorName, nationId, authorIntro)
+		insert into bs_author (authorId, authorName, nationId, authorIntro)
 		       values (authorId_seq.NEXTVAL, #{authorName}, #{nationId}, #{authorIntro})
 		
 	</insert>  
@@ -24,9 +24,9 @@
 	
 	  <![CDATA[
           select * from (
-              select /*+INDEX_DESC(vam_author SYS_C008274) */ 
+              select /*+INDEX_DESC(bs_author SYS_C008736) */ 
                   rownum as rn, authorid, authorname, nationid, regdate, updatedate
-            from vam_author 
+            from bs_author 
           
             where
       ]]>    
@@ -44,7 +44,7 @@
 	
 	<!-- 작가 수 -->
 	<select id="authorGetTotal" resultType="int">
-		select count(*) from vam_author
+		select count(*) from bs_author
 
 		<if test="keyword != null">
 			where authorname like '%' || #{keyword} || '%'
@@ -55,14 +55,14 @@
 	<!-- 작가 디테일 페이지를 위한 조회 -->
 	<select id="authorGetDetail" resultType="com.dustmq.model.AuthorVO">
   	
-  		select * from vam_author where authorid = #{authorId}
+  		select * from bs_author where authorid = #{authorId}
   	
   	</select>
 	
   	<!-- 작가 정보 수정 -->
   	<update id="authorModify">
   	
-  		update vam_author set authorName = #{authorName}, nationId = #{nationId}, authorIntro = #{authorIntro}, updatedate = sysdate 
+  		update bs_author set authorName = #{authorName}, nationId = #{nationId}, authorIntro = #{authorIntro}, updatedate = sysdate 
   		
   		where authorId = #{authorId}
   	
@@ -71,7 +71,7 @@
   	<!-- 작가 정보 삭제 -->
 	<delete id="authorDelete">
 	
-		delete from vam_author where authorId = #{authorId}
+		delete from bs_author where authorId = #{authorId}
 	
 	</delete>
   	

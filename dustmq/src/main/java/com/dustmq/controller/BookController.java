@@ -71,6 +71,17 @@ public class BookController {
 		model.addAttribute("ls", bookService.likeSelect());
 	}
 	
+	/* 카카오 페이지 이동 */
+	@RequestMapping(value="/kakaoMain", method=RequestMethod.GET)
+	public void kakaoPageGET(Model model) {
+		
+		logger.info("카카오 페이지 진입");
+	
+		model.addAttribute("cate1", bookService.getCateCode1());
+		model.addAttribute("cate2", bookService.getCateCode2());
+		model.addAttribute("ls", bookService.likeSelect());
+	}
+	
 	/* 이미지 출현 관련 */
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> getImage(String fileName) {	// fileName = '유동 경로' + '파일 이름'

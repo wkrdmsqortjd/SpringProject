@@ -98,8 +98,8 @@ a{
 }
 
 .filter_button{
-	background-color: #04AA6D;
-	border: 1px solid green;
+	background-color: #6AAFE6;
+	border: 1px solid #6AAFE6;
 	color: white;
 	padding: 10px 24px;
 	cursor: pointer;
@@ -115,12 +115,12 @@ a{
 }
 
 .filter_button:hover {
-    background-color: #3e8e41;
+    background-color: #00BFFF;
 }
 
 /* 버튼이 클릭 되었는지 확인 */
 .filter_active{
-	background-color: #045d3c;
+	background-color: #1E90FF;
 }
 
 /* 필터란 */

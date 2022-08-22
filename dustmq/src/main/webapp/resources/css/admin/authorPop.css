@@ -9,10 +9,11 @@
 	font-size: 33px;
     font-weight: bolder;
     padding-left: 15px;
-    background-color: #6AAFE6;
+    /* background-color: #6AAFE6; */
+	border-bottom: 2px solid #6AAFE6;    
     height: 13%;
     line-height: 70px;
-    color: white;
+    color: black;
 }
 
 .content_wrap{
@@ -71,6 +72,7 @@
     font-size: 15px;
     height: 20px;
     line-height: 20px;
+     border-right:none;
 }
 .search_btn{
 	height: 32px;
@@ -79,8 +81,8 @@
     font-size: 18px;
     line-height: 20px;
     position: absolute;
-    margin-left: 15px;
-    background-color: #c3daf7;
+    background-color: white;
+    border-left: none;
 }
 
 	/* 페이지 버튼 인터페이스 */

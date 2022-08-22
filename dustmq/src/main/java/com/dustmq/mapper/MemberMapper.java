@@ -1,5 +1,8 @@
 package com.dustmq.mapper;
 
+import java.util.HashMap;
+
+import com.dustmq.model.KakaoDTO;
 import com.dustmq.model.MemberVO;
 
 public interface MemberMapper {
@@ -15,4 +18,11 @@ public interface MemberMapper {
 	
 	// 주문자 주소 정보
 	public MemberVO getMemberInfo(String memberId);
+
+	//카카오 정보 저장
+	public void kakaoInsert(HashMap<String, Object> userInfo);
+		
+	//카카오 정보 확인
+	public KakaoDTO findKakao(HashMap<String, Object> userInfo);
+	
 }

@@ -134,6 +134,7 @@ a{
 .content_area{
 	width: 100%;
     min-height: 1000px;
+    margin-top: 5%;
 }
 
 .content_top{
@@ -278,6 +279,10 @@ height: 100%;
   	background-color: #1347e7;
   }
   
+  .point_info {
+  	margin-left: 3%;
+  }
+  
   /* 리뷰 영역 */
   	.content_bottom{
   		width: 80%;
@@ -385,13 +390,6 @@ height: 100%;
     color: white; 
   	cursor: pointer;
   }
- 	
-.content_bottom{
-	width: 100%;
-	min-height: 400px;
-    background-color: #e7dbdb;  	
-}
-
 
 /* 로그인 성공 영역 */
 .login_success_area{

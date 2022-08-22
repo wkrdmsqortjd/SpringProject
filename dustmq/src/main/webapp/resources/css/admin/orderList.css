@@ -65,10 +65,8 @@ ul{
     font-weight: bolder;
 }
 /* 관리자 wrap(네비+컨텐츠) */
-.admin_wrap{
-    
-    
-}
+/* .admin_wrap{
+} */
 
 /* 관리자페이지 네비 영역 */
 .admin_navi_wrap{
@@ -100,18 +98,21 @@ ul{
 
 /* 관리자페이지 컨텐츠 영역 */
 .admin_content_wrap{
-    width: 80%;
-    float:left;
-    min-height:700px;
+    width: 77%;
+    float: left;
+    margin-left: 3%;
+    min-height: 700px;
 }
-.admin_content_subject{	/* 관리자 컨텐츠 제목 영역 */
+
+.admin_content_subject{            
     font-size: 40px;
     font-weight: bolder;
-    padding-left: 15px;
-    background-color: #6AAFE6;
+    padding-left: 3%;
     height: 80px;
     line-height: 80px;
-    color: white;	
+    color: black;
+    width: 97%;
+    border-bottom: solid 3px #6AAFE6
 }
 	/* 작가 목록 영역 */
 .order_table_wrap{
@@ -124,7 +125,7 @@ ul{
     border: 1px solid #d3d8e1;
     text-align: center;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin-top: 5%;
 }
 .order_table td{
 	padding: 10px 5px;
@@ -167,6 +168,7 @@ ul{
     font-size: 15px;
     height: 20px;
     line-height: 20px;
+    border-right:none;
 }
 .search_btn{
 	height: 32px;
@@ -175,8 +177,8 @@ ul{
     font-size: 18px;
     line-height: 20px;
     position: absolute;
-    margin-left: 15px;
-    background-color: #c3daf7;
+    background-color: white;
+    border-left: none;
 }
 
 	/* 페이지 버튼 인터페이스 */

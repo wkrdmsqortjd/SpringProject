@@ -1716,3 +1716,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
 	  2. Service 테스트
 	  
 	  3. BookController : 
+	  
+	  ------------------------------- .gitignore를 통해 개인 정보 삭제 -----------------------------------------
+	  
+	  github에 올리기 전 개인 정보가 담긴 파일들을 보안을 해야하기 때문에 .gitignore에 파일을 추가하고 github에 push함

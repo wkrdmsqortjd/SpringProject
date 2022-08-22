@@ -7,7 +7,7 @@
   <!-- 댓글 등록 -->
   <insert id="enrollReply">
   
-  	insert into vam_reply(replyId, bookId, memberId, content, rating)
+  	insert into bs_reply(replyId, bookId, memberId, content, rating)
   	values(replyId_seq.NEXTVAL, #{bookId}, #{memberId}, #{content}, #{rating})
   
   </insert>
@@ -18,7 +18,7 @@
   	<![CDATA[
   	select * from(
   			 select rownum as rn, replyId, bookId, memberId, content, rating, regDate
-  			 from vam_reply
+  			 from bs_reply
   			 where rownum <= #{pageNum} * #{amount} and bookId =  #{bookId}
   			 order by regDate desc
   			 )
@@ -31,7 +31,7 @@
   <select id="getReplyTotal" resultType="int">
   
   	select count(*)
-  	from vam_reply
+  	from bs_reply
   	where bookId = #{bookId}
   
   </select>
@@ -39,7 +39,7 @@
   <!-- 댓글 존재 확인 -->
   <select id="checkReply" resultType="integer">
   
-  	select replyId from vam_reply
+  	select replyId from bs_reply
   	where memberId = #{memberId} and bookId = #{bookId}
   
   </select>
@@ -47,7 +47,7 @@
   <!-- 댓글 수정 -->
   <update id="updateReply">
   
-	update vam_reply set content = #{content}, rating = #{rating}
+	update bs_reply set content = #{content}, rating = #{rating}
 	where replyId = #{replyId}
   
   </update>
@@ -55,7 +55,7 @@
   <!-- 댓글 삭제 -->
   <delete id="deleteReply">
   
-  	delete from vam_reply
+  	delete from bs_reply
   	where replyId = #{replyId}
   
   </delete>
@@ -63,7 +63,7 @@
   <!-- 회원이 작성한 댓글정보 -->
   <select id="getUpdateReply" resultType="com.dustmq.model.ReplyVO">
   
-  	select * from vam_reply
+  	select * from bs_reply
   	where replyId = #{replyId}
   
   </select>
@@ -72,7 +72,7 @@
   <select id="getRatingAverage" resultType="Double">
   
   	select avg(rating)
-  	from vam_reply
+  	from bs_reply
   	where bookId = #{bookId}
   
   </select>
@@ -80,12 +80,11 @@
   <!-- 평균 평점 반영 -->
   <update id="updateRating">
   
-  	update vam_book
+  	update bs_book
   	set ratingAvg = #{ratingAvg}
   	where bookId = #{bookId}
   
   </update>
-  
-  
-  </mapper>
+
+</mapper>
   
