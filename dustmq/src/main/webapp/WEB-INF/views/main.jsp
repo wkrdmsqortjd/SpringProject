@@ -75,17 +75,17 @@
 				<div class="slide_div">
 					<div>
 						<a>
-							<img src="../resources/img/no_Image.png">
+							<img src="../resources/img/Event_1.png">
 						</a>
 					</div>
 					<div>
 						<a>
-							<img src="../resources/img/no_Image.png">
+							<img src="../resources/img/Event_2.png">
 						</a>
 					</div>
 					<div>
 						<a>
-							<img src="../resources/img/no_Image.png"> 
+							<img src="../resources/img/Event_3.png"> 
 						</a>
 					</div>				
 				</div>	
@@ -139,16 +139,6 @@ $(document).ready(function(){
 				autoplaySpeed : 5000
 			}				
 	);	
-	
-	/* 베너 슬릭 */
-/* 	$(".slick_banner").slick(
-		{
-			dots : false,
-			autoplay : true,
-			autoplaySpeed : 3000,
-			arrows : false
-		}		
-	); */
 	
 	/* 베스트 상품 */
 	$(".ls_div").slick({

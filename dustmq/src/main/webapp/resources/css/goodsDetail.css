@@ -162,9 +162,11 @@ height: 100%;
   position: relative;  		
 }
 .image_wrap img{
-  max-width: 100%;
+ /*  max-width: 100%;
   height: auto;
-  display: block;  		
+  display: block;  */
+    width: 210px;
+    height: 300px;
 }
 
 .line{

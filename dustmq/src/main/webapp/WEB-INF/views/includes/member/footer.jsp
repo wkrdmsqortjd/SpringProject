@@ -10,7 +10,7 @@
             <div class="footer_container">
                 
                 <div class="footer_left">
-                    <img src="/resources/img/guhaebang_logo.png">
+                    <img src="/resources/img/BookShop.png">
                 </div>
                 <div class="footer_right">
                     <h3>(주) GUHAEBANG    대표이사 : OOO</h3>
@@ -21,13 +21,6 @@
                     <li style="clear:left; width:100%">(본사) 서울시 강서구 양천로 125</li>
                     <li style="clear:left; width:100%">(고객센터) 장미아파트 101동 609호, Fax 02-2222-3333</li>
                     <div class="info_copyright">COPYRIGHT(C) guhaebang.naver.com. ALL RIGHTS RESERVED. </div>
-                   <!--  <br>
-                    사업자등록번호 : ooo-oo-ooooo
-                    <br>
-                    대표전화 : oooo-oooo(발신자 부담전화)
-                    <br>
-                    <br>
-                    COPYRIGHT(C) <strong>guhaebang.naver.com</strong>    ALL RIGHTS RESERVED. -->
                 </div>
             </div>
         </div> <!-- class="footer" -->      

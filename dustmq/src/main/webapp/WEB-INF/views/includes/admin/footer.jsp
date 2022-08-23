@@ -8,7 +8,7 @@
             <div class="footer_container">
                 
                 <div class="footer_left">
-                    <img src="/resources/img/guhaebang_logo.png">
+                    <img src="/resources/img/BookShop.png">
                 </div>
                 <div class="footer_right">
                     (주) GUHAEBANG    대표이사 : OOO

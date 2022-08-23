@@ -61,7 +61,9 @@
 											<div class="login_button_wrap">
 												<input type="button" class="login_button" value="로그인">
 												<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?<spring:eval expression="@config['KAKAO_API']"/>
-												&redirect_uri=http://localhost:2994/member/kakaoLogin&response_type=code">카카오 로그인</a>
+												&redirect_uri=http://localhost:2994/member/kakaoLogin&response_type=code">
+												<img src ="https://www.gb.go.kr/Main/Images/ko/member/certi_kakao_login.png" style = "height: 43px; width:29%;"/>
+												</a>
 											</div>
                             				<p class="mb-0 mt-4 text-center"><a href="/member/join" class="link">회원가입을 하시겠습니까?</a></p>
 				      					</div>
@@ -77,7 +79,6 @@
 	<!-- </div> -->
 </form>
 
-<!-- <script  src="resources/js/script.js"></script> -->
 <script>
  
     /* 로그인 버튼 클릭 메서드 */

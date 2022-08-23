@@ -65,17 +65,17 @@
 				<div class="slick_banner">
 					<div>
 						<a>
-							<img src="../resources/img/no_Image.png">
+							<img src="../resources/img/Login_Event_1.png">
 						</a>
 					</div>
 					<div>
 						<a>
-							<img src="../resources/img/no_Image.png">
+							<img src="../resources/img/Login_Event_2.png">
 						</a>
 					</div>
 					<div>
 						<a>
-							<img src="../resources/img/no_Image.png">
+							<img src="../resources/img/Login_Event_3.png">
 						</a>
 					</div>				
 				</div>

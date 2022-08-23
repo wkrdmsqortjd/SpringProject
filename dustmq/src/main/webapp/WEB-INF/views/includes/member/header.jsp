@@ -61,21 +61,20 @@
 			<div class="login_area">
 			<!-- 로그인 하지 않은 상태 -->
 			<c:if test = "${member == null }">
-				<!-- <div class="login_button"><a href="/member/login">로그인</a></div> -->
 				<div class="slick_banner">
 					<div>
 						<a>
-							<img src="../resources/img/no_Image.png">
+							<img src="../resources/img/Login_Event_1.png">
 						</a>
 					</div>
 					<div>
 						<a>
-							<img src="../resources/img/no_Image.png">
+							<img src="../resources/img/Login_Event_2.png">
 						</a>
 					</div>
 					<div>
 						<a>
-							<img src="../resources/img/no_Image.png">
+							<img src="../resources/img/Login_Event_3.png">
 						</a>
 					</div>				
 				</div>

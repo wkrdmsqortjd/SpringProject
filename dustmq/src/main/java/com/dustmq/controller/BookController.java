@@ -109,6 +109,8 @@ public class BookController {
 				e.printStackTrace();
 		}
 		
+		System.out.println("이미지 매핑 display 실행");
+		
 		return result;
 	}
 	

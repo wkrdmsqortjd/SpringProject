@@ -21,7 +21,7 @@
 <body>
 
 <!-- header -->
-<%@include file="includes/member/header.jsp" %>
+<%@include file="includes/member/header2.jsp" %>
 
 			<div class="clearfix"></div>			
 		</div>
@@ -152,13 +152,16 @@ $(document).ready(function(){
 	/* 이미지 삽입 */
 	const bobj = $(".image_wrap");
 	
-	if(bobj.data("bookId")){
+	if(bobj.data("bookid")){
 			
+		console.log(bobj);
+		
 		const uploadPath = bobj.data("path");
 		const uuid = bobj.data("uuid");
 		const fileName = bobj.data("filename");
 		
 		const fileCallPath = encodeURIComponent(uploadPath + "/s_" + uuid + "_" + fileName);
+		
 		
 		bobj.find("img").attr('src', '/display?fileName=' + fileCallPath);
 
