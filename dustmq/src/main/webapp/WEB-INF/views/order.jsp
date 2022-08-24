@@ -24,7 +24,7 @@
 		</div>
 		<div class="content_area">
 		
-			<div class="content_subject"><span>장바구니</span></div>
+			<div class="content_subject"><span>주문</span></div>
 
 			<div class="content_main">
 				<!-- 회원 정보 -->
@@ -438,7 +438,7 @@ function execution_daum_address(){
 			totalCount += parseInt($(element).find(".individual_bookCount_input").val());
 			// 총 종류
 			totalKind += 1;
-			// 총 마일리지
+			// 총 포인트
 			totalPoint += parseInt($(element).find(".individual_totalPoint_input").val());
 			
 		});

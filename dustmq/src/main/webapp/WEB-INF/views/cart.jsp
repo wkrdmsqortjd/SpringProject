@@ -72,7 +72,7 @@
 								<td class="td_width_4 price_td">
 									<del>정가 : <fmt:formatNumber value="${ci.bookPrice}" pattern="#,### 원" /></del><br>
 									판매가 : <span class="red_color"><fmt:formatNumber value="${ci.salePrice}" pattern="#,### 원" /></span><br>
-									마일리지 : <span class="green_color"><fmt:formatNumber value="${ci.point}" pattern="#,###" /></span>
+									포인트 : <span class="green_color"><fmt:formatNumber value="${ci.point}" pattern="#,###" /></span>
 								</td>
 								<td class="td_width_4 table_text_align_center">
 									<div class="table_text_align_center quantity_div">
@@ -152,7 +152,7 @@
 									<tbody>
 										<tr>
 											<td>
-												<strong>총 적립 예상 마일리지</strong>
+												<strong>총 적립 예상 포인트</strong>
 											
 											</td>
 											<td>
@@ -262,7 +262,7 @@ $(document).ready(function(){
 	let totalPrice = 0;				// 총 가격
 	let totalCount = 0;				// 총 갯수
 	let totalKind = 0;				// 총 종류
-	let totalPoint = 0;				// 총 마일리지
+	let totalPoint = 0;				// 총 포인트
 	let deliveryPrice = 0;			// 배송비
 	let finalTotalPrice = 0; 		// 최종 가격(총 가격 + 배송비)
 	
@@ -277,7 +277,7 @@ $(document).ready(function(){
 		totalCount += parseInt($(element).find(".individual_bookCount_input").val());
 		// 총 종류
 		totalKind += 1;
-		// 총 마일리지
+		// 총 포인트
 		totalPoint += parseInt($(element).find(".individual_totalPoint_input").val());
 	}
 	
@@ -302,7 +302,7 @@ $(document).ready(function(){
 	$(".totalPrice_span").text(totalPrice.toLocaleString());  // 총 가격	.text() 선택자 하위에 있는 자식들의 문자열만 출력
 	$(".totalCount_span").text(totalCount);					  // 총 갯수
 	$(".totalKind_span").text(totalKind);					  // 총 종류
-	$(".totalPoint_span").text(totalPoint.toLocaleString());  // 총 마일리지
+	$(".totalPoint_span").text(totalPoint.toLocaleString());  // 총 포인트
 	$(".delivery_price").text(deliveryPrice);				  // 배송비
 	$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());	// 최종 가격(배송비 포함) 
 
