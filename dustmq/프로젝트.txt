@@ -3,7 +3,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
 
 	프로젝트 핵심 기능
 	
-	1. 회원가입 (주소 API , 이메일 인증 , 아이디 중복 검사)
+	1. 회원가입 (주소 API , 이메일 인증 , 아이디 중복 검사) , 로그인
 	2. 관리자 페이지(Intercepter 적용, 상품 관리, 회원 관리)
 	3. 업로드(이미지 등록, 수정, 삭제)
 	4. 검색 & 페이징

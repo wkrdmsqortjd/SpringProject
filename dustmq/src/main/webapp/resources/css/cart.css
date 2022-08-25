@@ -173,14 +173,14 @@ a{
  .content_subject{
 	height: 110px;
     line-height: 110px;
-    background-color: #5080bd;
     margin-bottom: 60px; 
+    border-bottom: 2px solid #6AAFE6;
  
  }
 	 .content_subject span{ 
 	    padding-left: 30 px;
 	    display: inline-block;
-	    color: white;
+	    color: #6AAFE6;
 	    font-size: 50px;
 	    font-weight: bolder; 
 	 }

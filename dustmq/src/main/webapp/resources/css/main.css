@@ -108,8 +108,10 @@ a{
     background: white;
 }
 .image_wrap img{
-	max-width: 85%;
-    height: auto;
+	/* max-width: 85%; */
+	width: 95%;
+    /* height: auto; */
+    height: 80%;
     display: block;
 	margin: auto;    
 }
