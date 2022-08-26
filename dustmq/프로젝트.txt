@@ -259,7 +259,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
     2단계 '소설','교양','인문','과학','철학' 큰 범주의 책 분야로 분류
 	3단계 2단계의 분류에서 좀 더 세분화된 분야의 범주로 분류
 	
-	위의 cateCode와 더불어 카테고리 테이블(vam_bcate)에 cateName(카테고리 이름) 과 cateParent(상위 카테고리) 와 tier(카테고리 등급) 칼럼으로 구성
+	위의 cateCode와 더불어 카테고리 테이블(bs_bcate)에 cateName(카테고리 이름) 과 cateParent(상위 카테고리) 와 tier(카테고리 등급) 칼럼으로 구성
 	 
 	- cateParent는 어떠한 상위 카테고리의 하위 카테고리인지 알 수 있는 역할
 	
@@ -376,16 +376,16 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
 	  3. 할인율 유효성 체크 수정
 	  4. 외래 키 추가
 	  
-	  4-1 기존에는 테스트 편의를 위해서 '상품 테이블(vam_book)'의 cateCode, authorId에 외래 키를 추가 x
+	  4-1 기존에는 테스트 편의를 위해서 '상품 테이블(bs_book)'의 cateCode, authorId에 외래 키를 추가 x
 	      기능을 완성했기 때문에 아래의 명령을 통해서 외래키 설정
 	      
-	      alter table vam_book add foreign key (authorId) references vam_author(authorId);
-		  alter table vam_book add foreign key (cateCode) references vam_bcate(cateCode);
+	      alter table bs_book add foreign key (authorId) references bs_author(authorId);
+		  alter table bs_book add foreign key (cateCode) references bs_bcate(cateCode);
 	      
 	      외래키 추가 중 에러 발생 :  ORA-02298 cannot validate (string%, string%) - parent keys not found
 	      			     원인 : an alter table validating constraint failed because the table has orphaned child records.
 	      			     에러 발생 부모의 키 값을 찾을 수 없다. parent가 가지고 있지 않은 데이터를 child가 보유 했을 때 발생
-	      			     자식인 vam_book 테이블에 부모 vam_bcate 와 vam_author 에 없는 값을 가지고있어서 나타난 에러 테이블 삭제 후 다시 생성 후 해결
+	      			     자식인 bs_book 테이블에 부모 bs_bcate 와 bs_author 에 없는 값을 가지고있어서 나타난 에러 테이블 삭제 후 다시 생성 후 해결
 	      			     
 	      
   	 ======================================== 상품 목록 페이지 구현 ============================
@@ -469,7 +469,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
     <순서>
     1. Mapper
     2. Service
-    3. Controller : 여기서 조심해야할 부분이 있다. 삭제하고자 하는 테이블은 작가 테이블(vam_author) 데이터인데, 이 테이블은 외래 키 조건으로 인해 참조하는 상품테이블(vam_book)이 있다.
+    3. Controller : 여기서 조심해야할 부분이 있다. 삭제하고자 하는 테이블은 작가 테이블(bs_author) 데이터인데, 이 테이블은 외래 키 조건으로 인해 참조하는 상품테이블(bs_book)이 있다.
     				참조되지 않고 있는 행을 지운다면 문제는 없지만 만일, 참조되고 있는 행을 지우려고 시도하면 '무결성 제약 조건'을 위반 한다는 경고와 함께 
     				SQLIntegrityConstraintViolationException 예외가 발생
     				
@@ -503,7 +503,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
     			   위와 같은 작업을 하려면 'cos.jar', 'commons-fileupload', 'servlet' 등이 있는데 이중 'servlet' 라이브러리를 활용하여 구현
     			   단 , servlet은 3.0 이상부터 가능
     			   
-    			   또한, 우리는 페이지의 이동ㅇ벗이 데이터를 서버에 전송하고 반환받아 그 데이터를 사용하기 위해 AJAX를 사용할 예정
+    			   또한, 우리는 페이지의 이동없이 데이터를 서버에 전송하고 반환받아 그 데이터를 사용하기 위해 AJAX를 사용할 예정
     			   
     2. 라이브러리 추가
     
@@ -698,13 +698,13 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
    <순서>
    1. 테이블 생성 : 이미지 업로드로 인해 생성된 이미지에 대한 정보(uuid, fileName, uploadPath)를 DB에 등록할 수 있도록 테이블을 생성
    				 테이블을 생성하기 앞서 이미지 정보를 등록하는 방식에 대해 간단히 생각해보면 등록하고자 하는 이미지에대한 정보는 상품에 대한 이미지 정보.
-   				 하나의 상품에 하나의 이미지만 추가할 것. 그러므로 상품 테이블(vam_book)에 이미지에 대한 정보(uuid, fileName, uploadPath)를
+   				 하나의 상품에 하나의 이미지만 추가할 것. 그러므로 상품 테이블(bs_book)에 이미지에 대한 정보(uuid, fileName, uploadPath)를
    				 칼럼으로 추가
    				 
    				 뷰에서는 이미지를 하나만 등록할 수 있도록 로직을 구성했지만, 서버에서는 여러개의 이미지를 전달받더라도 처리할 수 있도록 코드를 구성.
    				 따라서 DB 등록 또한 여러 개의 이미지 정보를 등록할 수 있도록 구성해주어야 하는데 상품 테이블에 이미지 정보 컬럼이 있다면 하나의 이미지 정보밖에 처리 못함
    				 이를 보완하기 위해 이미지 정보를 따로 관리 할 수 있도록 새로운 테이블 생성, 이 테이블에 저장될 이미지 정보는 상품 정보에 대한 이미지 정보이기 때문에
-   				 bookId라는 컬럼을 추가하여 해당 컬럼은 오직 vam_book의 상품id(bookId)에 존재하는 데이터만 등록할 수 있도록 외래키를 통해 제약사항 추가할 것.
+   				 bookId라는 컬럼을 추가하여 해당 컬럼은 오직 bs_book의 상품id(bookId)에 존재하는 데이터만 등록할 수 있도록 외래키를 통해 제약사항 추가할 것.
    				 
    
    2. BookVO : 서버의 url 매핑 메서드에서 뷰에서 전송하는 이미지에 대한 정보를 전달 받을 수 있도록 작업
@@ -718,7 +718,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
    5. 이미지의 정보를 서버로 전송하는 작업을 완료했으니 이미지를 등록하는 Mapper 메서드를 작성 후, 기존의 '상품 정보'를 DB에 등록하는 bookEnroll() 메서드에 'bookId'값을 반환하도록
    	  <selectkey> 태그를 추가
    
-   5-1. 방향 : 이미지 테이블(vam_image)에 삽입 쿼리를 실행하는 Mapper 메서드 imageEnroll()작성
+   5-1. 방향 : 이미지 테이블(bs_image)에 삽입 쿼리를 실행하는 Mapper 메서드 imageEnroll()작성
    			  상품 정보 등록 Mapper 메서드를 호출하는 Service 단계의 bookEnroll() 메서드에서 imageEnroll()메서드를 호출할 것
    			  하지만 '이미지 정보'를 DB에 등록하는 쿼리문(imageEnroll())에는 'bookId'에 관한 데이터가 반드시 필요로 한데(외래 키 설정 때문) 서버로 부터 전달받은 BookVO 객체에는
    			  'bookId'에 관한 데이터가 없다는 점. 'bookId'정보는 DB에 등록하는 과정에서 새롭게 값이 부여되는 'bookId'에 대한 정보가 필요
@@ -751,7 +751,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
    						  
    						  이를 해결하기 위해선 제일 최근에 등록된 컬럼 값을 호출해주는 DB의 기능을 사용 ( 업로드 이미지 정보 등록 - 3 에서 해결안된 부분있음 )
    						  select TABLE_NAME, COLUMN_NAME, DATA_DEFAULT from USER_TAB_COLUMNS
-						  where TABLE_NAME = 'VAM_BOOK';	(위 쿼리를 실행시 bookId의 DATA_DEFAULT = null 이 나온다)
+						  where TABLE_NAME = 'BS_BOOK';	(위 쿼리를 실행시 bookId의 DATA_DEFAULT = null 이 나온다)
 						  
    6. AdminServiceImpl 에서 코드를 추가하여 상품 등록 및 이미지 등록 처리 기능을 완성하는것을 목표
    
@@ -797,8 +797,8 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
      	    이미지가 DB와 서버에 저장되는 것. 즉 기존의 이미지 데이터를 삭제하고 추가해주는 작업.
      	    크게 이미지 수정을 '이미지'가 저장되는 서버와 '이미지 정보'가 저장되는 DB 2가지 측면으로 생각
      	    
-     	    1-1. DB : 첫 번째는 vam_image 테이블에서 삭제할 이미지를 하나하나 찾아 새로 추가할 이미지 정보가 담긴 행을 추가해주는 것.
-     	    	      두 번째는 vam_image 테이블에서 수정하고자 하는 상품과 관련된 행을 모두 지우고 새로 추가 할 이미지 정보와 기존에 존재 해야할 이미지 정보가 담긴 행을 추가
+     	    1-1. DB : 첫 번째는 bs_image 테이블에서 삭제할 이미지를 하나하나 찾아 새로 추가할 이미지 정보가 담긴 행을 추가해주는 것.
+     	    	      두 번째는 bs_image 테이블에서 수정하고자 하는 상품과 관련된 행을 모두 지우고 새로 추가 할 이미지 정보와 기존에 존재 해야할 이미지 정보가 담긴 행을 추가
      	    	      두 번째 방식은 뷰에서 삭제할 이미지 정보를 별도로 전달받지 않고 수정할 대상 상품과 관련된 이미지 정보를 모두 지워준다.
      	    	      그 다음 기존에 존재해야 할 이미지 정보와 새로 추가한 이미지 정보를 뷰로 전달받아 테이블에 행들을 새롭게 추가
  	    	      
@@ -873,7 +873,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
 	따라서 하루 단위의 이미지 파일들을 체크할 대상으로 상정. 정리하면 DB에 저장된 어제자 날짜의 이미지 정보 리스트를 가져오고, 어제자 날짜에 저장된 이미지 파일들의 리스트를 가져온다.
 	두 리스트를 비교해 DB리스트에 존재하지 않느 서버 이미지 리스트를 분류하여 해당 리스트의 파일들을 삭제
 	
-	지정된 날짜에 등록된 행들을 반환하기 위해서 명령문의 where 조건문에 vam_image 테이블의 uploadPath 컬럼값을 지정된 형식("/")으로 어제 날짜 값을 부여해야함.
+	지정된 날짜에 등록된 행들을 반환하기 위해서 명령문의 where 조건문에 bs_image 테이블의 uploadPath 컬럼값을 지정된 형식("/")으로 어제 날짜 값을 부여해야함.
 	Oracle에선 "TO_CHAR"을 사용하면 됨
 	
 	2. DB에 저장되지 않은 이미지 파일 삭제 구현
@@ -915,13 +915,13 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
 	
 	이미지 정보가 없는 상품의 정보는 삭제가 정상적으로 작동하지만 이미지를 가지고 있는 상품 정보를 삭제 시 에러 발생 해결을 목표
 	
-	1. 에러 이유 : "무결성 제약조건"위반으로 인해서 발생되는데 이는 'vam_image' 테이블의 "bookId" 컬럼이 'vam_book' 테이블의 "bookId" 컬럼을 참조하도록 외래키를 설정했는데
-				이는 현재의 상품 정보 삭제는 'vam_book' 테이블의 지정된 한 행을 삭제하도록 되어있다. 해당 상품에 이미지가 있는 경우, 'vam_image'의 하나 혹은 둘 이상의 행들이 존재하고
-				이 행들은 'vam_book' 테이블의 하나의 행을 참조하고 있는 상태.
-				즉, 'vam_book'의 테이블 행을 지우게 되면, 'vam_book'테이블을 참조하던 'vam_image' 행들이 참조할 수 있는 값이 없어져 에러가 발생
+	1. 에러 이유 : "무결성 제약조건"위반으로 인해서 발생되는데 이는 'bs_image' 테이블의 "bookId" 컬럼이 'bs_book' 테이블의 "bookId" 컬럼을 참조하도록 외래키를 설정했는데
+				이는 현재의 상품 정보 삭제는 'bs_book' 테이블의 지정된 한 행을 삭제하도록 되어있다. 해당 상품에 이미지가 있는 경우, 'bs_image'의 하나 혹은 둘 이상의 행들이 존재하고
+				이 행들은 'bs_book' 테이블의 하나의 행을 참조하고 있는 상태.
+				즉, 'bs_book'의 테이블 행을 지우게 되면, 'bs_book'테이블을 참조하던 'bs_image' 행들이 참조할 수 있는 값이 없어져 에러가 발생
 				
 	2. 방안  : 이러한 에러를 고치기 위해 참조하고있는 테이블을 먼저 삭제하거나 같이 삭제하는 방법이 있다.
-			  첫 번째 방식으로 'vam_image' 테이블의 행을 삭제한 뒤 'vam_book' 테이블의 행을 삭제
+			  첫 번째 방식으로 'bs_image' 테이블의 행을 삭제한 뒤 'bs_book' 테이블의 행을 삭제
 			  서버에 저장되어있는 이미지 파일의 삭제도 해야한다. 배치 프로그램을 설정해놓았지만 그 코드는 어제자 파일만 대상으로 삭제가 되도록 구성.
 			  따라서 해당 상황에 적용될 배치프로그램을 작성하거나, 상품 정보가 삭제될 때 같이 서버의 이미지 파일도 삭제되도록 한다.( 후자의 방식을 선택 )
 			  즉, 기존 '상품 정보 삭제'를 하게 되면 상품에 대한 정보만 삭제되었는데, 이미지 기능이 추가됨에 따라 '상품 정보' , 'DB에 저장된 이미지 정보' , '서버에 저장된 이미지 파일' 을 삭제해야함 
@@ -984,7 +984,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
  	2. Criteria 객체에 String[] authorArr (작가 리스트) , String cateCode (카테고리 코드) 를 추가
  	
  	3. Mapper 메서드 : '작가 검색'을 위해 필요한 authorId 정보를 만들어 내는 Mapper 추가. 사용자가 자신이 원하는 작가의 '이름'을 작성하여 서버로 보냄.
- 					 vam_book 테이블에 authorName의 컬럼이 있다면 기존 검색 쿼리에 전달받은 '이름' 데이터를 그대로 사용하면 되지만, authorName이 없고 authorId
+ 					 bs_book 테이블에 authorName의 컬럼이 있다면 기존 검색 쿼리에 전달받은 '이름' 데이터를 그대로 사용하면 되지만, authorName이 없고 authorId
  					 로 변환해주는 작업을 해주는 Mapper 메서드 작성
  					 작성해줄 Mapper 메서드의 반환 결과로 전달받은 데이터를 Criteria의 authorArr 변수에 저장할 것.
  					 authorArr은 String[] 로 선언을 했는데 이는 authorId가 한 개 이상일 수 있기 때문이다. 동명이인일 수 있고, "ABC" 를 찾으려 "AB"만 입력해도
@@ -1202,10 +1202,10 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
 	 
 	4. CartMapper.java : 카트 추가, 카트 삭제, 카트 수정, 카트 목록, 카트 체크 등 메서드를 구현
 						
-						addCart()는 vam_cart 테이블의 row를 추가하는 메서드. memberId, bookId, bookCount가 필요해 CartVO를 매개변수로 받음
+						addCart()는 bs_cart 테이블의 row를 추가하는 메서드. memberId, bookId, bookCount가 필요해 CartVO를 매개변수로 받음
 						반환타입은 row 추가 성공 시 1, 실패 시 0을 반환하도록 int로 지정
 						
-						deleteCart()는 vam_cart의 row를 삭제하는 메서드. row 를 삭제하기 위해서는 cartId에 대한 정보가 필요
+						deleteCart()는 bs_cart의 row를 삭제하는 메서드. row 를 삭제하기 위해서는 cartId에 대한 정보가 필요
 						파라미터 변수를 cartId로 지정, addCart와 같이 성공 시 0, 실패 시 1 로 확인 가능하게 반환타입은 int로 설정
 						
 						modifyCart()는 cart테이블의 지정한 row의 수량을 변경하는 메서드. 어떤 row인지 지정을 위한 cartId와 몇 개의 수량으로 변경할지에 대한 bookCount가 필요
@@ -1231,7 +1231,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
 	
 	7-1. 뷰로부터 장바구니 추가 요청을 받으면 DB에 등록할 데이터인 memberId, bookId, bookCount 를 전달 받음
 	
-	7-2. 전달받은 memberId 와 bookId는 동일한 데이터를 가지는 vam_cart행이 있는지 확인하고 존재하지 않으면 DB에 새로운 행 추가
+	7-2. 전달받은 memberId 와 bookId는 동일한 데이터를 가지는 bs_cart행이 있는지 확인하고 존재하지 않으면 DB에 새로운 행 추가
 	
 	7-3. 화면의 이동이 없는 비동식 방식으로 뷰는 요청하도록 할 것, http바디에 바로 데이터를 삽입해 반환
 	
@@ -1334,9 +1334,9 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
     하지만 DB는 물리적으로 N:N관계가 존재할 수 없어 '주문' 과 '상품'의 관계를 가운데서 해결해주는 '주문_상품' 매핑 테이블을 만듦
     ( N:N -> 1:N , N:1 )
     
-    '주문 테이블' vam_order 테이블 , '매핑 테이블' vam_orderItem을 생성
+    '주문 테이블' bs_order 테이블 , '매핑 테이블' bs_orderItem을 생성
     
-    vam_orderItem 테이블에 savePoint라는 컬럼이 있는데 이는 트랜잭션을 특정 부분에서 취소시킬 수 있는 명령어
+    bs_orderItem 테이블에 savePoint라는 컬럼이 있는데 이는 트랜잭션을 특정 부분에서 취소시킬 수 있는 명령어
      
     1. 페이지 구현(order.jsp) : cart.jsp 와 goodsDetail.jsp 에서 주문 페이지로 이동 가능
      
@@ -1489,15 +1489,15 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
     1-1. '주문 현황' 페이지에서 "배송준비" 상태인 경우에만 "주문 취소" 버튼이 보임
     1-2. 버튼을 누르면 "주문 취소" 요청을 서버에 요청
     1-3. 서버에서는 "주문 금액, 포인트, 재고" 반환
-    1-4. 주문 관련 테이블의 데이터는 지워지지 않고 vam_order 테이블의 "주문 상태"의 값이 변함
+    1-4. 주문 관련 테이블의 데이터는 지워지지 않고 bs_order 테이블의 "주문 상태"의 값이 변함
     1-5. 서버는 "주문 취소"가 완료되면 주문 현황 페이지로 리다이렉트
     
-    2. Mapper : vam_order 테이블의 주문 상태 컬럼을 "배송준비" -> "주문취소" 로 변경하는 쿼리
-    			vam_order 테이블의 데이터를 가져오는 쿼리와 vam_orderItem 테이블의 데이터를 가져오는 쿼리를 메서드로 구현
+    2. Mapper : bs_order 테이블의 주문 상태 컬럼을 "배송준비" -> "주문취소" 로 변경하는 쿼리
+    			bs_order 테이블의 데이터를 가져오는 쿼리와 bs_orderItem 테이블의 데이터를 가져오는 쿼리를 메서드로 구현
     			
 	3. OrderCancleVO : 뷰가 요청하면 전송할 데이터를 담는 역할을 하는 VO 클래스(model)
 	
-	4. OrderService : '주문 취소'는 '주문' 과 크게 다르지 않음. 단지 '주문 취소'는 vam_cart 데이터를 삭제하지 않고
+	4. OrderService : '주문 취소'는 '주문' 과 크게 다르지 않음. 단지 '주문 취소'는 bs_cart 데이터를 삭제하지 않고
 					  사용했던 금액과 포인트를 다시 추가
 					  
     4-1. DB에 저장된 주문, 주문 상품 정보를 가져옴
@@ -1520,7 +1520,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
   					    
     1-1. Create : 로그인한 회원이 '상품 상세 페이지'로 이동하면 '댓글 등록' 버튼이 보임
     			  '댓글 등록' 버튼을 누르면 작성하는 팝업창 뜸, '등록' 버튼을 누르면 DB에 댓글 등록 완료
-    			  이 등록 과정에서 vam_book의 평점이 최신화, 등록이 완료되면 팝업창이 닫히고 '상세 페이지'에는 등록된 댓글을 볼 수 있음
+    			  이 등록 과정에서 bs_book의 평점이 최신화, 등록이 완료되면 팝업창이 닫히고 '상세 페이지'에는 등록된 댓글을 볼 수 있음
     			  
   	1-2. Read : '상세 페이지' 하단에 10개 단위로 페이징 된 댓글을 보는 것이 가능
   				댓글 리스트 하단에 페이징 기능
@@ -1530,11 +1530,11 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
 				  수정하면 수정 내용이 DB에 최신화, 수정이 완료되면 팝업창이 닫히고 '상품 수정 페이지'에 댓글이 수정한 댓글로 최신화
 				  
   	1-4. Delete : '상품 페이지'에서 회원이 작성한 댓글이 있는 경우 자신의 댓글에 대하여 '삭제' 버튼이 보인다.
-  				  '삭제'버튼을 누르면 DB에 댓글 정보가 삭제, vam_book의 평점이 최신화, 페이지 이동 없이 댓글 리스트 최신화
+  				  '삭제'버튼을 누르면 DB에 댓글 정보가 삭제, bs_book의 평점이 최신화, 페이지 이동 없이 댓글 리스트 최신화
 				  
    
    2. 댓글 테이블 : 관계를 생각해보면 회원은 여러개의 댓글을 작성할 수 있다. ( 1 : N , 일대다 관계 )
-   	 (vam_reply)  댓글은 반드시 하나의 상품에 속해야 하므로 댓글과 상품은 ( N : 1 , 다대일 관계 )
+   	 (bs_reply)  댓글은 반드시 하나의 상품에 속해야 하므로 댓글과 상품은 ( N : 1 , 다대일 관계 )
    				  회원은 여러가지 댓글을 달 수 있으나, 하나의 상품에는 하나의 댓글만 작성할 수 있도록 구현
    				  댓글 테이블에서 회원, 상품 외래 키 두 개를 하나의 단위로 하는 UNIQUE 제약조건 적용
    				  
@@ -1614,7 +1614,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
 	
 	========================================================= 댓글 체크 기능 =============================================================		
 	
-	한 회원은 같은 상품에 대해서 한번 이상의 댓글을 작성할 수 없다.(vam_reply의 unique 제약조건)
+	한 회원은 같은 상품에 대해서 한번 이상의 댓글을 작성할 수 없다.(bs_reply의 unique 제약조건)
 	
 	1. 흐름 
 	
@@ -1657,7 +1657,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
 	
 	======================================= 상품 테이블 평균 평점 갱신 ===============================================
 	
-	vam_book 테이블에 ratingAvg 컬럼을 추가해 댓글의 '등록 , 삭제 , 수정' 을 할 때 상품의 평균 평점 값이 최신화 하는 기능
+	bs_book 테이블에 ratingAvg 컬럼을 추가해 댓글의 '등록 , 삭제 , 수정' 을 할 때 상품의 평균 평점 값이 최신화 하는 기능
 		
 	========================================= 메인 페이지 슬라이드 ==================================
 	
@@ -1672,7 +1672,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
 	   
   	2. SelectVO : 노출시킬 상품의 정보를 정의한 클래스
   	
-  	3. BookMapper.xml : likeSelect의 쿼리문에 nulls last 라는 문장을 넣었는데 vam_book에 ratingAvg를 추가할 떄 기본값을 따로 주지 않았기 때문에
+  	3. BookMapper.xml : likeSelect의 쿼리문에 nulls last 라는 문장을 넣었는데 bs_book에 ratingAvg를 추가할 떄 기본값을 따로 주지 않았기 때문에
   						값을 부여하지 않으면 null값이 들어간다. null이 포함된 채로 정렬을 하면 정렬된 값보다 null값이 앞에 배치되므로 ,
   						null last을 이용해 null값을 마지막에 배치
 	
@@ -1703,7 +1703,7 @@ https://velog.io/@alicesykim95/Git-Project-Upload-%ED%94%84%EB%A1%9C%EC%A0%9D%ED
 	  이 기능을 위해 필요한 데이터는 '카테고리 이름', '카테고리 코드번호', '개수' 이다. 이 데이터들을 담을 객체가 필요하고
 	  CateFilterVO 라는 클래스를 작성. 반환받을 카테고리가 여러개일 수 있기때문에 List<CateFilterVO>를 반환 타입으로 지정
 	  
-	  '카테고리 이름', '카테고리 코드번호' 데이터만 필요하면 vam_bcate 와 vam_book을 조인문을 통해 정보를 만들면 되지만 '개수'라는 데이터도 필요하기에
+	  '카테고리 이름', '카테고리 코드번호' 데이터만 필요하면 bs_bcate 와 bs_book을 조인문을 통해 정보를 만들면 되지만 '개수'라는 데이터도 필요하기에
 	  이를 구하기 위해서는 상품이 속한 카테고리 수만큼 쿼리문이 실행되도록 구성
 	  
 	  1. '검색 조건'에 속하는 '카테고리 코드번호'를 반환하는 쿼리문을 요청해 '카테고리 코드번호'의 리스트를 얻는다.

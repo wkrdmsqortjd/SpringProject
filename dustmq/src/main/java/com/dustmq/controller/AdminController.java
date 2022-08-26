@@ -132,12 +132,6 @@ public class AdminController {
 			model.addAttribute("listCheck", "empty"); // List에 객체가 없으면, 작가 존재 x
 		}
 
-		// 페이지 이동 인터페이스 데이터
-//		int total = authorService.authorGetTotal(cri); 
-//		PageDTO pageMaker = new PageDTO(cri, total);
-//		System.out.println("pageMaker = " + pageMaker);
-//		model.addAttribute("pageMaker", pageMaker);
-
 		model.addAttribute("pageMaker", new PageDTO(cri, authorService.authorGetTotal(cri)));
 
 	}
@@ -443,35 +437,6 @@ public class AdminController {
 				multipartFile.transferTo(saveFile);
 
 				/* 썸네일 생성 */
-
-				/*
-				 * // 썸네일을 만들기 위해 File 객체 생성, 해당 날짜 폴더에 s_uuid_원본파일.png 형식으로 파일 생성 File
-				 * thumbnailFile = new File(uploadPath, "s_" + uploadFileName);
-				 * 
-				 * // ImageIO의 read() 메서드를 호출하여 BufferedImage 타입으로 변경 후 변수에 대입, 원본 버퍼 이미지
-				 * BufferedImage bo_image = ImageIO.read(saveFile);
-				 * 
-				 * // 비율 (소수점으로도 지정할 수 있도록 double타입) double ratio = 3;
-				 * 
-				 * // 넓이, 높이 int width = (int)(bo_image.getWidth() / ratio); // BuffedImage 클래스의
-				 * 메서드 int height = (int) (bo_image.getHeight() / ratio); // BuffedImage 클래스의
-				 * 메서드
-				 * 
-				 * // 썸네일 이미지 BufferedImage 객체를 생성해주고 참조 변수에 대입. 매개변수 ( 넓이 , 높이 , 생성될 이미지 타입 ),
-				 * BufferedImage bt_image = new BufferedImage(width, height,
-				 * BufferedImage.TYPE_3BYTE_BGR); // 일종의 크기를 지정해 흰색 도화지를 만드는 느낌
-				 * 
-				 * // 만든 도화지에 그림을 그리기 위해 Graphic2D 객체를 생성 Graphics2D graphic =
-				 * bt_image.createGraphics();
-				 * 
-				 * // 도화지에 그림을 그리는 과정 graphic.drawImage(bo_image, 0, 0, width, height, null); //
-				 * ( 목표 이미지, 좌표 x, 좌표 y , 넓이 , 높이 )
-				 * 
-				 * // 제작한 썸네일 이미지 (bt_image)를 파일로 만들어줌 ImageIO.write(bt_image, "png",
-				 * thumbnailFile); // ( 파일로 저장할 이미지, 어떤 형식, 썸네일 이미지가 저장될 경로 )
-				 */
-
-				/* 방법 2 */
 				File thumbnailFile = new File(uploadPath, "s_" + uploadFileName);
 
 				BufferedImage bo_image = ImageIO.read(saveFile);
@@ -562,25 +527,6 @@ public class AdminController {
 	public String orderCanclePOST(OrderCancelVO vo, HttpServletRequest request) {
 
 		orderService.orderCancle(vo);
-
-		/* 주문 취소시 해당 회원의 아이디로 로그인 되어서 있음
-		 * 최신화 하기위한 회원 객체 생성 MemberVO member = new MemberVO();
-		 * member.setMemberId(vo.getMemberId()); // 상품 취소한 회원 아이디를 세팅
-		 * 
-		 * 상품 취소 후 사용자 정보를 최신화
-		 * 
-		 * // 세션을 이용하기위해 선언 및 session을 가져옴 HttpSession session = request.getSession();
-		 * 
-		 * try { // 상품 취소한 회원의 로그인 정보를 memberLogin에 저장 MemberVO memberLogin =
-		 * memberService.memberLogin(member);
-		 * 
-		 * // 비밀 번호는 그대로 유지하기 위해 "" 빈 칸을 저장(빈 칸을 저장하면 원래 비밀번호가 유지)
-		 * memberLogin.setMemberPw("");
-		 * 
-		 * // session에 해당 회원의 정보를 저장 session.setAttribute("member", memberLogin);
-		 * 
-		 * } catch (Exception e) { e.printStackTrace(); }
-		 */
 
 		// 원래 있었던 페이지에 redirect 형식으로 이동
 		return "redirect:/admin/orderList?keyword=" + vo.getKeyword() + "&amount=" + vo.getAmount() + "&pageNum="
