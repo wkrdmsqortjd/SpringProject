@@ -116,6 +116,7 @@
     <img width="930" alt="Order" src="https://user-images.githubusercontent.com/97008707/187402043-dc83c892-bbb0-4e01-8d11-4fed9fd85a4e.png">
     </p>
     <p align="center">5. 장바구니 페이지 </p>
+    <p align="center">
     <img width="918" alt="Cart" src="https://user-images.githubusercontent.com/97008707/187402161-76a20834-dd5d-4bdc-a64c-94b41d4447d5.png">
     </p>
     <p align="center"> 6. 상품 상세 페이지 </p>
