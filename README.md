@@ -80,7 +80,7 @@
 ---
 <br>
 
-![BookShop(ERD)](https://user-images.githubusercontent.com/97008707/187075319-b8abd306-54de-4041-a26f-ae7595754dc1.png)
+<img width="641" alt="BookShop(ERD)" src="https://user-images.githubusercontent.com/97008707/187430614-2754bc0e-bda2-4e13-b332-c4f757b06cda.png">
 
 <br>
 
