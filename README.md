@@ -119,6 +119,7 @@
     <img width="918" alt="Cart" src="https://user-images.githubusercontent.com/97008707/187402161-76a20834-dd5d-4bdc-a64c-94b41d4447d5.png">
     </p>
     <p align="center"> 6. 상품 상세 페이지 </p>
+    <p align="center">
     <img width="747" alt="GoodDetail" src="https://user-images.githubusercontent.com/97008707/187402663-40b37f6c-4cc5-4590-bd88-7e6c293154e1.png">
     </p>
     <p align="center"> 7. 댓글 </p>  
@@ -128,7 +129,7 @@
     <p align="center"> 8. 검색 페이지 </p>
     <p align="center">
     <img width="804" alt="Serch" src="https://user-images.githubusercontent.com/97008707/187403151-6571ac99-cc8d-42d6-818a-4c599b8478dd.png">
-    <p>
+    </p>
     <br>
     </details>
 
