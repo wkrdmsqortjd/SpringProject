@@ -139,20 +139,23 @@
     <p align="center"> 1. 작가 관리 </p>
     <p align="center">
     <img width="698" alt="AuthorManage" src="https://user-images.githubusercontent.com/97008707/187419580-20e5f8b5-b1d9-47bf-b4fe-aab5166bfbea.png">
-    <p>
+    </p>
     <p align="center"> 2. 작가 등록 </p>
     <p align="center">
     <img width="707" alt="AuthorEnroll" src="https://user-images.githubusercontent.com/97008707/187419813-cbe4735d-5aac-496b-ae48-a38c3c7ccf7e.png">
-    <p>
+    </p>
     <p align="center"> 3. 상품 관리 </p>
+    <p align="center">
     <img width="704" alt="GoodsManage" src="https://user-images.githubusercontent.com/97008707/187420505-f620cb0f-8055-49a2-ba17-e052a22fc642.png">
-    <p>
+    </p>
     <p align="center"> 4. 상품 등록 </p>
+    <p align="center">
     <img width="697" alt="GoodsEnroll" src="https://user-images.githubusercontent.com/97008707/187420764-0fe78dec-4826-4e76-9071-2473c7a9ce32.png">
-    <p>
+    </p>
     <p align="center"> 5. 주문 현황 </p>
+    <p align="center">
     <img width="715" alt="orderList ng" src="https://user-images.githubusercontent.com/97008707/187421078-a690ea89-3c20-4aeb-aa5b-4c10d8d7ba3d.png">
-    <p>
+    </p>
 </details>
 
 <br>
