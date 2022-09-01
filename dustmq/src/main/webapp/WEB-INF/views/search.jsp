@@ -22,7 +22,7 @@
 <%@include file="includes/member/header.jsp" %>
 
 <div class="clearfix"></div>	
-
+</div>
 		<div class="content_area">
 				
 		<!-- 게시물 O -->
@@ -164,9 +164,7 @@
 		</c:if>
 				
 		</div>
-		
-		 <%@include file="./includes/admin/footer.jsp" %>	<!-- footer --> 
-		
+		<%@include file="includes/member/footer.jsp" %>
 	</div>	<!-- class="wrap" -->
 </div>	<!-- class="wrapper" -->
 
@@ -246,12 +244,15 @@
 	// <select>태그에 있는 <option>태그에서 selected 속성을 부여해주기 코드 추가
 	$(document).ready(function(){
 		
-		// 검색 타입 selected
+		// 검색 타입 selected ( 사용자가 검색 전에 선택했던 검색 타입으로 검색 타입 태그 옵션을 설정 )
 		const selectedType = '<c:out value="${pageMaker.cri.type}"/>';
-		
-		if(selectedType != ""){
-				$("select[name='type']").val(selectedType).attr("selected", "selected");			
-		}
+            if(selectedType != "" && selectedType != "C"){   //검색 타입이 카테고리가 아닌 경우
+               let type = selectedType.split("")[0];
+               $("select[name='type']").val(type).attr("selected", "selected");   
+            }
+            else if(selectedType == "C"){   //검색 타입이 카테고리인 경우
+               $("select[name='type']").val("T").attr("selected", "selected");
+            }
 		
 		/* 이미지 삽입 */
 		$(".image_wrap").each(function(i, obj){	// i는 순회할 떄 사용될 index고 obj는 그 순서의 객체

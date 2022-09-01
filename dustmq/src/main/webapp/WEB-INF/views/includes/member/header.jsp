@@ -90,7 +90,7 @@
             </c:if>		
 			
 			</div>
-			
+			</div>
 			<script>
 			
 			$(document).ready(function(){

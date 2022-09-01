@@ -23,6 +23,9 @@ public interface BookService {
 	/* 국외 카테고리 리스트 */
 	public List<CateVO> getCateCode2();
 	
+	/* 검색결과 카테고리 필터 정보 */
+	public List<CateFilterVO> getCateInfoList(Criteria cri);
+	
 	/* 상품 정보 */
 	public BookVO getGoodsInfo(int bookId);
 	
@@ -31,8 +34,5 @@ public interface BookService {
 	
 	/* 평점 순 상품 정보 */
 	public List<SelectVO> likeSelect();
-	
-	/* 검색결과 카테고리 필터 정보 */
-	public List<CateFilterVO> getCateInfoList(Criteria cri);
 
 }

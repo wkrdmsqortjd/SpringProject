@@ -27,7 +27,7 @@ public class AdminMapperTests {
 		
 		for(int i = 0; i <= 90; i++) {
 		book.setBookName("프로젝트 테스트");
-		book.setAuthorId(87);
+		book.setAuthorId(12);
 		book.setPubleYear("2021-03-18");
 		book.setPublisher("출판사");
 		book.setCateCode("100000");

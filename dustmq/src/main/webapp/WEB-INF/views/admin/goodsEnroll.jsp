@@ -202,7 +202,7 @@
 	/* 취소 버튼 */
 	$("#cancelBtn").click(function(){
 	
-	location.href="/admin/main"
+	location.href="/admin/goodsManage"
 	
 	});
 	

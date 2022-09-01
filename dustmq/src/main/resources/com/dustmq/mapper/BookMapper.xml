@@ -7,10 +7,7 @@
 
 	<!-- criteria(검색 조건) -->
 	<sql id="criteria">
-			<!-- <if test="keyword != null">
-				bookName like '%' || #{keyword} || '%' and			
-			</if> -->
-			
+
 			<!-- authorId 앞에 AND를 없앨 수 있게 prefixOverrides 속성 사용 -->
 			<trim prefix="(" suffix=") AND" prefixOverrides="AND">
 				
@@ -22,9 +19,9 @@
 					<choose>	
 						
 						<when test="type == 'A'.toString()">			<!-- 'A'는 작가 검색 -->
-							<trim prefixOverrides="or">
+							<trim prefixOverrides="OR" prefix="(" suffix=")" >
 								<foreach item="authorId" collection="authorArr">	<!-- authorId는 배열의 형태로 전달 받기 때문에 foreach 사용 -->
-									<trim prefix="or">
+									<trim prefix="OR">
 										authorId = #{authorId}
 									</trim>
 								</foreach>
@@ -199,25 +196,14 @@
 	<!-- 평점 순 상품정보 -->
 	<select id="likeSelect" resultType="com.dustmq.model.SelectVO">
   
-	 	<!-- select * from
-		(select rownum as rn, bookId, bookName, ratingAvg, (select cateName from bs_bcate where bs_book.cateCode = bs_bcate.cateCode) as cateName
-		from bs_book 
-		order by ratingAvg desc nulls last)	
-		<![CDATA[									
-		where rn < 9
-		]]>	 -->
-		
 		<!-- 1. 상품테이블에서, 2. 해당 컬럼의 데이터를 조회 3. 평점순으로 정리 4. 정렬한 데이터들을 rownum값으로 8번까지 5. 모든 데이터 조회 -->
-		select * from	<!-- 5 -->
+		select * from	
 		(select bookId, bookName, ratingAvg, (select cateName from bs_bcate where bs_book.cateCode = bs_bcate.cateCode) as cateName	<!-- 2. 서브쿼리 -->
-		from bs_book	<!-- 1 -->
-		order by ratingAvg desc nulls last) <!-- 3 -->
+		from bs_book	
+		order by ratingAvg desc nulls last) 
 		<![CDATA[									
 		where rownum < 9	
 		]]>	
-  		<!-- 4 -->
 	</select>
-	
-	<!-- 평균값을 위한 book테이블 데이터 조회 구하기 -->
 	
   </mapper>
